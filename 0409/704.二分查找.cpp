@@ -28,6 +28,7 @@ using namespace std;
 #include <cctype>
 #include <cstring>
 #include <cassert>
+#include <memory>
 using namespace std;
 
 class Solution
