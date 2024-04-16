@@ -54,25 +54,27 @@ struct ListNode
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        
-        auto faker_A = new ListNode();
-        faker_A->next = headA;
+        // 构造哈希表 哈希表索引时间复杂度常量级
         auto setNodes = unordered_set<ListNode*>();
-        while (faker_A->next!= nullptr)
+
+        //将一条链表所有的node地址加入哈希表
+        auto pos = headA;
+        while (pos)
         {
-            setNodes.emplace(faker_A->next);
-            faker_A=faker_A->next;
+            setNodes.emplace(pos);
+            pos=pos->next;
         }
         
-        auto faker_B = new ListNode();
-        faker_B->next=headB;
-        while (faker_B->next!=nullptr)
-        {
-            if (setNodes.count(faker_B->next))
+        //遍历另一条链表
+        auto res = headB;
+        while (res)
+        {   
+            // 常量查找
+            if (setNodes.count(res))
             {
-                return faker_B->next;
+                return res;
             }
-            faker_B=faker_B->next;
+            res=res->next;
         }
         
         return nullptr; 
