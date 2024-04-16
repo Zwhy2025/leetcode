@@ -32,47 +32,37 @@ class Solution
 {
 public:
     ListNode *removeNthFromEnd(ListNode *head, int n)
-    {   
-        //暴力解法
+    {
+        // 快慢指针
         auto faker = new ListNode();
         faker->next = head;
-        auto pos = faker;
-        auto trav = faker;
 
-        int len = getListSize(trav);
+        auto back = faker;
+        auto front = faker;
 
-        //处理异常边界 数组无元素 索引超过限制
-        int index = len-n;
-        if (len>0 && index < 0){
-            return nullptr;
-        }
-
-        // 索引到目标点
-        while (index--)
+        while (front->next != nullptr)
         {
-            pos=pos->next;
+            if (n > 0)///< 快指针先走
+            {
+                n--;
+                front = front->next;
+            }
+            else ///< 同时移动
+            {
+                front = front->next;
+                back = back->next;
+            }
         }
-        
-        auto tmp=pos->next;
-        // 嫁接指针
-        pos->next=pos->next->next;
-        
-        // 清理内存的好习惯
+
+        // 删除节点
+        auto tmp = back->next;
+        back->next=back->next->next;
+
+        // 清理内存
         delete tmp;
         tmp=nullptr;
 
         return faker->next;
-    }
-
-    int getListSize(ListNode *trav)
-    {
-        int size = 0;
-        while (trav->next != nullptr)
-        {
-            size++;
-            trav=trav->next;
-        }
-        return size;
     }
 };
 // @lc code=end
