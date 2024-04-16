@@ -1,7 +1,6 @@
 // @before-stub-for-debug-begin
 #include <vector>
 #include <string>
-#include "commoncppproblem160.h"
 
 using namespace std;
 // @before-stub-for-debug-end
@@ -21,6 +20,24 @@ using namespace std;
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <queue>
+#include <stack>
+#include <unordered_map>
+#include <map>
+#include <set>
+#include <unordered_set>
+#include <cmath>
+#include <climits>
+#include <cctype>
+#include <cstring>
+#include <cassert>
+#include <numeric>
+#include <memory>
+using namespace std;
 
 #ifndef LISTNODE_H
 #define LISTNODE_H
@@ -39,25 +56,25 @@ public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         
         auto faker_A = new ListNode();
-        faker_A->next=headA;
-        auto pos_A = faker_A;
-        while (pos_A->next!=nullptr)
-        {   
-            auto faker_B = new ListNode();
-            faker_B->next=headB;
-            auto pos_B =faker_B;
-            while (pos_B->next!=nullptr)
-            {
-                if (pos_A->next == pos_B->next)
-                {
-                   return pos_A->next;
-                }
-                pos_B=pos_B->next;
-            }
-            pos_A=pos_A->next;
-            
+        faker_A->next = headA;
+        auto setNodes = unordered_set<ListNode*>();
+        while (faker_A->next!= nullptr)
+        {
+            setNodes.emplace(faker_A->next);
+            faker_A=faker_A->next;
         }
-
+        
+        auto faker_B = new ListNode();
+        faker_B->next=headB;
+        while (faker_B->next!=nullptr)
+        {
+            if (setNodes.count(faker_B->next))
+            {
+                return faker_B->next;
+            }
+            faker_B=faker_B->next;
+        }
+        
         return nullptr; 
     }
 };
