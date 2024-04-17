@@ -23,6 +23,7 @@
 #include <cassert>
 #include <numeric>
 #include <memory>
+#include <algorithm>
 using namespace std;
 
 class Solution
@@ -35,9 +36,7 @@ public:
         for (int i = 0, j = s.size() - 1; i < j; i++, j--)
         {
             //交换
-            tmp  = s[i];
-            s[i] = s[j];
-            s[j] = tmp;
+            std::swap(s[i],s[j]);
         }
     }
 };
