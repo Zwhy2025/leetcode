@@ -30,14 +30,12 @@ class Solution
 public:
     void reverseString(vector<char> &s)
     {
-        char tmp;
+
         // 双指针
         for (int i = 0, j = s.size() - 1; i < j; i++, j--)
         {
-            //交换
-            tmp  = s[i];
-            s[i] = s[j];
-            s[j] = tmp;
+            // 交换
+            std::swap(s[i], s[j]);
         }
     }
 };
