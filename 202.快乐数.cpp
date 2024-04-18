@@ -42,31 +42,22 @@ public:
     bool isHappy(int n)
     {
         /**
-         * 1. 符合快乐数:"1,10,100,1000,...."
-         * 2. 不符合循环终止条件:
+         * 快慢指针解决循环问题
+         * 前提条件一定要推导出非快乐数字一定会回归到一个循环
+         * 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4
+         * 而快乐数字也会回归到循环
+         * 1->1->1->....
          */
-        auto set = unordered_set<int>();
 
-        while (true)
+        int back = n;
+        int front = n;
+        do
         {
-            int sum = calculate(n);
-            if (sum == 1)
-            {
-                return true;
-            }
+            back = calculate(back);
+            front = calculate(calculate(front));
+        } while (back != front);
 
-            if (set.count(sum))
-            {
-                return false;
-            }
-            else
-            {
-                set.insert(sum);
-            }
-
-            n = sum;
-        }
+        return front == 1;
     }
-}
-;
+};
 // @lc code=end
