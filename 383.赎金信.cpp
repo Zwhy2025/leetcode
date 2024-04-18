@@ -29,16 +29,26 @@ class Solution
 public:
     bool canConstruct(string ransomNote, string magazine)
     {
-        auto sMagazine = unordered_multiset<char>(magazine.begin(), magazine.end());
-        
-        for (auto c : ransomNote)
+
+        if (ransomNote.size() > magazine.size())
         {
-            if(!sMagazine.count(c)){
-                return false;
-            }else{
-                auto it = sMagazine.find(c);
-                sMagazine.erase(it);
-            }
+            return false;
+        }
+
+        // 数值小的时候 数组做哈希表 效率优势大
+        int alphabet[26];
+        for (auto it :magazine)
+        {
+            alphabet[it-'a']++;
+        }
+        
+        for (auto it : ransomNote)
+        {
+           if(!alphabet[it-'a']){
+                return false ;
+           }else{
+               alphabet[it-'a']--;
+           }
         }
 
         return true;
