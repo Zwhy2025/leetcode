@@ -30,8 +30,8 @@ public:
     string reverseWords(string s)
     {
         std::stack<std::string> strStack;
-
         std::string tmp = "";
+        s.push_back(' ');
         for (char c : s)
         {
             if (c != ' '){
@@ -46,18 +46,13 @@ public:
             }
         }
 
-        if (!tmp.empty())
-        {
-            strStack.push(tmp);
-            tmp.clear();
-        }
-
-        while(!strStack.empty()){
+        int index =strStack.size();
+        while(--index){
             tmp.append(strStack.top());
-            tmp.push_back(' ');
             strStack.pop();
+            tmp.push_back(' ');
         }
-        tmp.erase(tmp.end()-1);
+        tmp.append(strStack.top());
         return tmp;
 
     }
