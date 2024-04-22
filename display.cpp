@@ -79,28 +79,41 @@ void eraseSet()
     std::cout << "删除所有元素后，元素 " << c << " 的数量: " << countAfterAllErased << std::endl;
 }
 bool canConstruct(string ransomNote, string magazine)
-    {
-        auto sMagazine = unordered_set<char>(magazine.begin(), magazine.end());
-        
-        for (auto c : ransomNote)
-        {
-            std::cout<<c<<std::endl;
-            std::cout<<sMagazine.count(c)<<std::endl;
-            if(!sMagazine.count(c)){
-                return false;
-            }else{
-                auto it = sMagazine.find(c);
-                sMagazine.erase(it);
-            }
-        }
+{
+    auto sMagazine = unordered_set<char>(magazine.begin(), magazine.end());
 
-        return true;
+    for (auto c : ransomNote)
+    {
+        std::cout << c << std::endl;
+        std::cout << sMagazine.count(c) << std::endl;
+        if (!sMagazine.count(c))
+        {
+            return false;
+        }
+        else
+        {
+            auto it = sMagazine.find(c);
+            sMagazine.erase(it);
+        }
     }
+
+    return true;
+}
+
+void findStr(){
+    std::string str="abcabd";
+
+    std::cout<< (str + str).find(str, 1)<< std::endl;
+    std::cout << ((str + str).find(str,1) != str.size())<< std::endl;
+    return;
+}
 
 int main()
 {
-    std::cout<<canConstruct("aa","aab");
+    // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
     // testSet();
     // eraseSet();
     // std::cout << calculate(47) << std::endl;
+    //std::cout << canConstruct("aa", "aab");
+    findStr();
 }
