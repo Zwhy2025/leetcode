@@ -29,28 +29,12 @@ class Solution
 public:
     bool repeatedSubstringPattern(string s)
     {
-        for (int i = 1;  i * 2 <= s.size(); i++)
-        {
-            if (s.size() % i == 0)
-            {
-                bool match = true;
-                for (int j = i; j < s.size(); j++)
-                {
-                    // 找到前i个位置进行匹配
-                    // 并且j向后移动 
-                    // 滑动匹配
-                    if (s[j] != s[j - i])
-                    {
-                        match = false;
-                        break;
-                    }
-                }
-
-                if (match) return true;
-            }
-        }
-
-        return false;
+        // 右值节省内存
+        // 从1开始查找,忽略查到left s
+        // 查到right s
+        // 则为中间一定有repeated
+        return (s + s).find(s, 1) != s.size();
     }
 };
 // @lc code=end
+
