@@ -42,8 +42,7 @@ public:
             }
 
             auto begin = haystack.begin() + i;
-            if (string(begin, begin + needle.size()) == needle)
-            {
+            if(std::equal(begin,begin+needle.size(),needle.begin())){
                 return i;
             }
         }
