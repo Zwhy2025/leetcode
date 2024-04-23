@@ -30,26 +30,17 @@ class Solution
 public:
     int removeElement(vector<int> &nums, int val)
     {
-        // 如果找到一个,逻辑上少遍历一个元素,
-        // 因为最后末尾元素逻辑上删除,size--
-        int size = nums.size();
-        for (int i = 0; i < size;)
+        //双指针法（快慢指针法）： 
+        //通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。
+        int show = 0;
+        for (int fast = 0; fast < nums.size(); fast++)
         {
-            if (nums[i] == val)
-            {
-                size--;
-                for (int j = i + 1; j < nums.size(); j++){///< 使用后续元素覆盖
-                   
-                    nums[j - 1] = nums[j];
-                }
-            }
-            else ///< 处理遍历的逻辑在这,因为如果找到抹除一个元素,当前元移动,会自动遍历
-            {
-                i++;
+            //慢指针才是真正返回的数组
+            if (val != nums[fast]){
+                nums[show++] = nums[fast];
             }
         }
-
-        return size;
+        return show;
     }
 };
 // @lc code=end
