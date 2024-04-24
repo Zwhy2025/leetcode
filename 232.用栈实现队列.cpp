@@ -31,54 +31,40 @@ public:
     {
     }
 
-    /**
-     * @brief 交换两个栈中数据
-     * @param output 输出
-     * @param input 输入
-     */
-    void exchange(stack<int> &output, stack<int> &input)
-    {
-        while (!input.empty())
-        {
-            output.push(input.top());
-            input.pop();
-        }
-    }
 
     void push(int x)
     {
-        exchange(_last, _front);
-        _last.push(x);
+        _input.push(x);
     }
 
     int pop()
     {
-        if (!_last.empty())
+        if (_output.empty())
         {
-            exchange(_front, _last);
+            while(!_input.empty()){
+                _output.push(_input.top());
+                _input.pop();
+            }
         }
-        int ret = _front.top();
-        _front.pop();
+        int ret = _output.top();
+        _output.pop();
         return ret;
     }
 
     int peek()
     {
-        if (!_last.empty())
-        {
-            exchange(_front, _last);
-        }
-        int ret = _front.top();
+        int ret = this->pop();
+        _output.push(ret);
         return ret;
     }
 
     bool empty()
     {
-        return !_front.size() && !_last.size();
+        return _input.empty() && _output.empty();
     }
 
-    std::stack<int> _last;
-    std::stack<int> _front;
+    std::stack<int> _input;
+    std::stack<int> _output;
 };
 
 /**
