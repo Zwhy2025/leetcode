@@ -36,6 +36,7 @@ public:
     }
     
     int evalRPN(vector<string>& tokens) {
+        // 朴实无华
         stack<string> stack;
         for(auto str : tokens){
             if (str=="+"){
