@@ -24,22 +24,55 @@
 #include <memory>
 using namespace std;
 
-class Solution {
-public:
-    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        vector<int> res;
-        
-        if (nums.size()<k){
-            return res;
+class Solution
+{
+    class MonoDeque
+    {
+    public:
+        void pop(int value)
+        {
+            // 队列中不一定存了 滑动窗口的元素
+            if (!_deque.empty() && value == _deque.front()) {
+                _deque.pop_front();
+            }
         }
-        // 耗时 O(n*M)
-        // 暴力过不了 会超时
-        for (auto it = nums.begin(); it <= nums.end()-k; it++)
-        {   
-            res.push_back(*std::max_element(it,it+k));
+
+        void push(int value)
+        {
+            // 大脑混乱&
+            while (!_deque.empty() && value > _deque.back()){
+                _deque.pop_back();
+            }
+            _deque.push_back(value);
+        }
+
+        int max(){
+            return _deque.front();
+        }
+
+    private:
+        std::deque<int> _deque;
+    };
+
+public:
+    vector<int> maxSlidingWindow(vector<int> &nums, int k)
+    {
+        MonoDeque que;
+        vector<int> res;
+
+        for (int i = 0; i < k; i++)
+        {
+            que.push(nums[i]);
+        }
+
+        res.push_back(que.max());
+        for (int i = k; i < nums.size(); i++)
+        {
+            que.pop(nums[i-k]);
+            que.push(nums[i]);
+            res.push_back(que.max());
         }
         return res;
     }
 };
 // @lc code=end
-
