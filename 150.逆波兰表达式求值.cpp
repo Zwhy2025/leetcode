@@ -26,34 +26,30 @@ using namespace std;
 
 class Solution {
 public:
+
+    std::pair<int,int>  getdate(std::stack<string>& stack){
+        int a = std::stoi(stack.top());
+        stack.pop();
+        int b = std::stoi(stack.top());
+        stack.pop();
+        return std::pair<int,int>(a,b);
+    }
+    
     int evalRPN(vector<string>& tokens) {
         stack<string> stack;
         for(auto str : tokens){
-            if (str=="+")
-            {
-                int a = std::stoi(stack.top());
-                stack.pop();
-                int b = std::stoi(stack.top());
-                stack.pop();
-                stack.push(std::to_string(b+a));
+            if (str=="+"){
+                auto pair = getdate(stack);
+                stack.push(std::to_string(pair.second+pair.first));
             }else if(str=="-") {
-                int a = std::stoi(stack.top());
-                stack.pop();
-                int b = std::stoi(stack.top());
-                stack.pop();
-                stack.push(std::to_string(b-a));
+                auto pair = getdate(stack);
+                stack.push(std::to_string(pair.second-pair.first));
             }else if(str=="/"){
-                int a = std::stoi(stack.top());
-                stack.pop();
-                int b = std::stoi(stack.top());
-                stack.pop();
-                stack.push(std::to_string(b/a));
+                auto pair = getdate(stack);
+                stack.push(std::to_string(pair.second/pair.first));
             }else if(str=="*"){
-                int a = std::stoi(stack.top());
-                stack.pop();
-                int b = std::stoi(stack.top());
-                stack.pop();
-                stack.push(std::to_string(b*a));
+                auto pair = getdate(stack);
+                stack.push(std::to_string(pair.second*pair.first));
             }else{
                 stack.push(str);
             }
