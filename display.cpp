@@ -108,6 +108,19 @@ void findStr(){
     return;
 }
 
+void topSet(){
+       auto nums = std::vector<int>{1,1,1,2,2,3};
+       auto topSet = std::multiset<int>(nums.begin(),nums.end());
+
+       for(auto set : topSet){
+        std::cout<<set<<std::endl;
+       }
+       std::cout<<topSet.size()<<std::endl;
+
+
+
+}
+
 int main()
 {
     // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
@@ -115,5 +128,7 @@ int main()
     // eraseSet();
     // std::cout << calculate(47) << std::endl;
     //std::cout << canConstruct("aa", "aab");
-    findStr();
+    //findStr();
+    
+    topSet();
 }
