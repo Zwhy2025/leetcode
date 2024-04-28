@@ -121,14 +121,62 @@ void topSet(){
 
 }
 
+// char* add = "word";
+// char* target = "hello";
+void MenMove(char* add,char* target,int size){
+    
+}
+
+
+#include <mutex>
+class display
+{
+public:
+    std::shared_ptr<display> getIns(){
+    
+        // if (_dispaly == nullptr) {   
+        //     std::unique_lock<std::mutex> lock(_mutex);
+        //     if (_dispaly == nullptr){
+        //         _dispaly = make_shared<display>();
+        //     }
+        // }
+
+        std::unique_lock<std::mutex> lock(_mutex);
+        if (_dispaly == nullptr){
+            _dispaly = make_shared<display>();
+        }
+        return _dispaly;
+    }
+    ~display();
+    
+private:
+    display(/* args */);
+
+private:
+
+    std::mutex _mutex;
+    static std::shared_ptr<display> _dispaly;
+};
+
+display::display(/* args */)
+{
+}
+
+display::~display()
+{
+
+}
+
+
 int main()
 {
     // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
     // testSet();
     // eraseSet();
-    // std::cout << calculate(47) << std::endl;
-    //std::cout << canConstruct("aa", "aab");
-    //findStr();
-    
-    topSet();
+
+    std::cout << calculate(47) << std::endl;
+    std::cout << canConstruct("aa", "aab");
+
+    // findStr();
+    // topSet();
 }
