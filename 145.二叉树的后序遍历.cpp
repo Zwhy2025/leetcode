@@ -50,19 +50,31 @@ struct TreeNode
 class Solution
 {
 public:
-    void travTree(TreeNode *node, vector<int> &res)
-    {
-        if (node == nullptr)return;
-        // 前 后 中 -> 后序遍历
-        travTree(node->left, res);
-        travTree(node->right, res);
-        res.push_back(node->val);
-    }
+
 
     vector<int> postorderTraversal(TreeNode *root)
     {
-        vector<int> ret;
-        travTree(root, ret);
+        std::vector<int> ret;
+        std::stack<TreeNode* > st;
+        if(root==nullptr){
+            return ret;
+        }
+
+        st.push(root);
+        while(!st.empty()){
+
+            auto node = st.top();
+            st.pop();
+            ret.push_back(node->val); ///<中
+            // 栈的处理方式是反的
+            if (node->left){
+                st.push(node->left);       ///< 左
+            }
+            if (node->right){
+                st.push(node->right);      ///< 右边
+            }
+        }
+        reverse(ret.begin(),ret.end());
         return ret;
     }
 };
