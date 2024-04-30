@@ -41,29 +41,36 @@ struct TreeNode
     int val;
     TreeNode *left;
     TreeNode *right;
-    TreeNode():val(0),left(nullptr),right(nullptr) {}
-    TreeNode(int value):val(value),left(nullptr),right(nullptr) {}
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int value) : val(value), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 #endif // LISTNODE_H
 
-class Solution {
+class Solution
+{
 public:
-
-    void travTree(TreeNode *node, vector<int> &res)
+    vector<int> inorderTraversal(TreeNode *root)
     {
-        if (node == nullptr)return;
-        // 前 中 后  -> 中序遍历
-        travTree(node->left, res);
-        res.push_back(node->val);
-        travTree(node->right, res);
-    }
-
-    vector<int> inorderTraversal(TreeNode* root) {
         vector<int> ret;
-        travTree(root, ret);
+        stack<TreeNode* > st;
+        auto node = root;
+        while (node != nullptr || !st.empty())
+        {
+            //一直索引到最底部
+            if (node != nullptr){
+                st.push(node);              
+                node = node->left;          ///<左
+            }
+            else{
+                node = st.top();
+                st.pop();
+                ret.push_back(node->val);   //中
+                node = node->right;         ///<右边
+            }
+        }
+
         return ret;
     }
 };
 // @lc code=end
-
