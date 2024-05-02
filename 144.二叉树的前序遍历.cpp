@@ -51,20 +51,29 @@ struct TreeNode
 class Solution
 {
 public:
-    void travTree(TreeNode *node, vector<int>& res)
-    {
-        if (node == nullptr) return;
-        // 中 前 后 -> 先序遍历
-        res.push_back(node->val);
-        travTree(node->left, res);
-        travTree(node->right, res);
-    }
-
     vector<int> preorderTraversal(TreeNode *root)
     {
-        vector<int> ret;
-        travTree(root, ret);
-        return ret;
+        vector<int> res;
+        stack<TreeNode* > st;
+        if(root == nullptr) return res;
+        
+        // 启动节点
+        st.push(root);
+        while(!st.empty()){
+            // 中
+            auto node = st.top();
+            st.pop();
+            res.push_back(node->val);
+            // 左
+            if(node->right){
+                st.push(node->right);
+            }
+            // 右
+            if (node->left){
+                st.push(node->left);
+            }
+        }
+        return res;
     }
 };
 // @lc code=end

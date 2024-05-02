@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=145 lang=cpp
+ * @lc app=leetcode.cn id=102 lang=cpp
  *
- * [145] 二叉树的后序遍历
+ * [102] 二叉树的层序遍历
  */
 
 // @lc code=start
@@ -50,32 +50,39 @@ struct TreeNode
 class Solution
 {
 public:
-
-
-    vector<int> postorderTraversal(TreeNode *root)
+    vector<vector<int>> levelOrder(TreeNode *root)
     {
-        std::vector<int> ret;
-        std::stack<TreeNode* > st;
-        if(root==nullptr){
-            return ret;
+        vector<vector<int>> res;
+        std::queue<TreeNode *> dq;
+        if(root){
+            dq.push(root);
         }
+            
+        while (!dq.empty())
+        {
+            int size = dq.size();
+            vector<int> tmp;
+            // 层序遍历一次要遍历两个节点
+            // 但是遍历根节点和最后一个非双节点的时候
+            // 需要动态调整到一个
+            for (int i = 0; i < size; i++)
+            {
+                auto node = dq.front();
+                dq.pop();
+                tmp.push_back(node->val);
 
-        st.push(root);
-        while(!st.empty()){
+                if (node->left){
+                    dq.push(node->left);
+                }
 
-            auto node = st.top();
-            st.pop();
-            ret.push_back(node->val); ///<中
-            // 栈的处理方式是反的
-            if (node->left){
-                st.push(node->left);       ///< 左
+                if (node->right){
+                    dq.push(node->right);
+                }
+              
             }
-            if (node->right){
-                st.push(node->right);      ///< 右边
-            }
+            res.push_back(tmp);
         }
-        reverse(ret.begin(),ret.end());
-        return ret;
+        return res;
     }
 };
 // @lc code=end
