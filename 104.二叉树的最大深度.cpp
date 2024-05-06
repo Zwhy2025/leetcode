@@ -49,19 +49,29 @@ struct TreeNode
 class Solution
 {
 public:
-    int traverTree(TreeNode *node)
-    {
-        if (!node) return 0;
-
-        int leftDepth = traverTree(node->left);
-        int rightDepth = traverTree(node->right);
-        int depth = 1 + max(leftDepth, rightDepth);
-        return depth;
-    }
 
     int maxDepth(TreeNode *root)
     {
-        return traverTree(root);
+        std::queue<TreeNode*> qe;
+        int ret = 0;
+        if(!root) return ret;
+        qe.push(root);
+        while(!qe.empty())
+        {   //每次遍历一层
+            int size = qe.size();
+            // 每次到达一层深度自增
+            ret++;
+            // 完成每一层所有节点的迭代
+            for (int i = 0; i < size; i++)
+            {
+                auto node = qe.front();
+                qe.pop();
+                if (node->left) qe.push(node->left);
+                if (node->right) qe.push(node->right);
+            }
+        
+        }
+        return ret;
     }
 };
 // @lc code=end
