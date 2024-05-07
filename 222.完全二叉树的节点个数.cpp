@@ -49,18 +49,18 @@ struct TreeNode
 
 class Solution {
 public:
-    int ret = 0;
-    void travTree(TreeNode* node){
-        if(!node) return;
-        ret++;
-        if(node->left) travTree(node->left);
-        if(node->right) travTree(node->right);
 
+    int travTree(TreeNode* node){
+        if(!node) return 0;
+        int left  = travTree(node->left);  // 左 
+        int right = travTree(node->right); // 右
+        ///< 这里很巧妙
+        int treeNum = left +right + 1;     // 中
+        return treeNum;
     }
 
     int countNodes(TreeNode* root) {
-       travTree(root);
-       return ret;
+       return travTree(root);
     }
 };
 // @lc code=end
