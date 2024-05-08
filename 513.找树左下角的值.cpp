@@ -58,30 +58,21 @@ public:
         qe.push(root);
         int ret = 0;
 
+        // 每次遍历一层
         while (!qe.empty())
         {
-            // 每次遍历一层
-            int size = qe.size();
-            for (int i = 0; i < size; i++)
-            {
-                
-                auto node = qe.front();
-                qe.pop();
-                
-                //取每层第一个节点的val
-                if(i==0){
-                    ret = node->val;
-                }
-   
-                if (node->left){
-                    qe.push(node->left);
-                }
-
-                if (node->right){
-                    qe.push(node->right);
-                }
+            auto node = qe.front();
+            qe.pop();
+            
+            // 从右边往左边遍历完美符合题干要求
+            if (node->right){
+                qe.push(node->right);
             }
- 
+
+            if (node->left){
+                qe.push(node->left);
+            }
+            ret = node->val;            
         }
         return ret;
 
