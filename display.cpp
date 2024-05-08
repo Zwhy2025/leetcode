@@ -142,6 +142,7 @@ public:
         // }
 
         std::unique_lock<std::mutex> lock(_mutex);
+        
         if (_dispaly == nullptr){
             _dispaly = make_shared<display>();
         }
@@ -149,8 +150,8 @@ public:
     }
     ~display();
     
-private:
     display(/* args */);
+private:
 
 private:
 
@@ -164,19 +165,55 @@ display::display(/* args */)
 
 display::~display()
 {
+    std::cout<<"display deconstruct"<<std::endl;
+}
+
+
+void ptr_1(display* ptr){
+    std::cout<<"------------- ptr_1 start -------------"<<std::endl;
+    display* ptr_1 = ptr;
+    delete ptr_1;
+    std::cout<<"------------- ptr_1 end -------------"<<std::endl;
+}
+
+
+void ptr_test(){
+    std::cout<<"------------- ptr_test start -------------"<<std::endl;
+    display* ptr = new display();
+
+    ptr_1(ptr);
+    std::cout<<"------------- ptr_test end  -------------"<<std::endl;
+    // std::weak_ptr<display> weak(ptr);
+    // std::shared_ptr<display> move =std::move(ptr);
+    
+    // if (ptr){
+    //     std::cout<<"move ptr is not nullptr"<<std::endl;
+    // }
+
+    // std::shared_ptr<display> shared(weak.lock());
+    // if (shared)
+    // {
+    //    std::cout<<"get shared ptr"<<std::endl;
+    // }else{
+    //     std::cout<<"get nullptr"<<std::endl;
+    // }
+    
 
 }
 
 
 int main()
-{
+{   
+    std::cout<<"------------- begin -------------"<<std::endl;
+    ptr_test();
     // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
     // testSet();
     // eraseSet();
 
-    std::cout << calculate(47) << std::endl;
-    std::cout << canConstruct("aa", "aab");
+    //std::cout << calculate(47) << std::endl;
+    //std::cout << canConstruct("aa", "aab");
 
     // findStr();
     // topSet();
+     std::cout<<"------------- end -------------"<<std::endl;
 }
