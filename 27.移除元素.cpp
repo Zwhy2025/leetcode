@@ -30,17 +30,16 @@ class Solution
 public:
     int removeElement(vector<int> &nums, int val)
     {
-        //双指针法（快慢指针法）： 
-        //通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。
-        int show = 0;
-        for (int fast = 0; fast < nums.size(); fast++)
+        int slow = 0;
+        for (int fast  = 0; fast < nums.size(); fast++)
         {
-            //慢指针才是真正返回的数组
-            if (val != nums[fast]){
-                nums[show++] = nums[fast];
+            if(val!=nums[fast]){
+                nums[slow] = nums[fast];
+                slow++;
             }
         }
-        return show;
+
+        return slow;
     }
 };
 // @lc code=end
