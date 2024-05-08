@@ -51,28 +51,37 @@ struct TreeNode
 class Solution
 {
 public:
-    int travTree(TreeNode *node)
-    {
-        // 判断叶子节点
-        // 判断左边叶子节点
-        if (!node)
-            return 0;
-
-        int left = travTree(node->left);
-        if (node->left && 
-                !node->left->left &&
-                !node->left->right){
-            
-            left = node->left->val;
-        }
-        int right = travTree(node->right);
-
-        return left + right;
-    }
-
     int sumOfLeftLeaves(TreeNode *root)
     {
-        return travTree(root);
+        stack<TreeNode *> st;
+        if (!root){
+            return 0;
+        }
+        st.push(root);
+        int ret = 0;
+        while (!st.empty())
+        {
+            auto node = st.top();
+            st.pop();
+            
+            // 判断左叶子节点的条件
+            if (node->left &&
+                !node->left->left &&
+                !node->left->right)
+            {
+                ret += node->left->val;
+            }
+
+            if (node->right){
+                st.push(node->right);
+            }
+            if (node->left){
+                st.push(node->left);
+            }
+
+            continue;
+        }
+        return ret;
     }
 };
 // @lc code=end
