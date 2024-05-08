@@ -5,7 +5,6 @@
  */
 
 // @lc code=start
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -28,14 +27,19 @@ using namespace std;
 class Solution
 {
 public:
+    void swap(char& a, char& b)
+    {
+        auto temp = a;
+        a = b;
+        b = temp;
+    }
+
     void reverseString(vector<char> &s)
     {
 
-        // 双指针
         for (int i = 0, j = s.size() - 1; i < j; i++, j--)
         {
-            // 交换
-            std::swap(s[i], s[j]);
+            this->swap(s[i],s[j]);
         }
     }
 };

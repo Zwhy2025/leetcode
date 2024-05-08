@@ -201,11 +201,22 @@ void ptr_test(){
 
 }
 
+void reverseString(vector<char>& s) {
+
+        std::cout<<s.size();
+        for (int i = 0,j= s.size(); i < j; i++,j--)
+        {
+            std::cout<<i;    
+            std::swap(s[j],s[i]);
+        }
+    }
 
 int main()
 {   
     std::cout<<"------------- begin -------------"<<std::endl;
-    ptr_test();
+    vector<char> s={'c','b','a'};
+    reverseString(s);
+    std::cout<<s[0];
     // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
     // testSet();
     // eraseSet();
