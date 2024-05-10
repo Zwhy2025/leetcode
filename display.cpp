@@ -223,17 +223,16 @@ void ptr_test(){
 //     }
 // }
 
-#include "344.反转字符串.cpp"
+//#include "344.反转字符串.cpp"
+#include "654.最大二叉树.cpp"
 
 int main()
 {   
     std::cout<<"------------- begin -------------"<<std::endl;
-    vector<char> s={'c','b','a'};
+    vector<int> vet = {3,2,1,6,0,5};
 
     auto ex = Solution();
-    ex.reverseString(s);
-    ex.reverseString(s);
-    std::cout<<"s[0]: "<<s[0]<<std::endl;
+    ex.constructMaximumBinaryTree(vet);
 
 
     // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
@@ -245,5 +244,5 @@ int main()
 
     // findStr();
     // topSet();
-     std::cout<<"------------- end -------------"<<std::endl;
+    std::cout<<"------------- end -------------"<<std::endl;
 }
