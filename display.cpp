@@ -201,22 +201,41 @@ void ptr_test(){
 
 }
 
-void reverseString(vector<char>& s) {
+// void reverseString(vector<char>& s) {
+//     for (int i = 0,j= s.size(); i < j; i++,j--)
+//     {
+//         std::swap(s[i],s[j]);
+//     }
+//  }
+//  void swap(char& a, char& b)
+//     {
+//         auto temp = a;
+//         a = b;
+//         b = temp;
+//     }
 
-        std::cout<<s.size();
-        for (int i = 0,j= s.size(); i < j; i++,j--)
-        {
-            std::cout<<i;    
-            std::swap(s[j],s[i]);
-        }
-    }
+// void reverseString(vector<char> &s)
+// {
+
+//     for (int i = 0, j = s.size() - 1; i < j; i++, j--)
+//     {
+//         std:swap(s[i],s[j]);
+//     }
+// }
+
+#include "344.反转字符串.cpp"
 
 int main()
 {   
     std::cout<<"------------- begin -------------"<<std::endl;
     vector<char> s={'c','b','a'};
-    reverseString(s);
-    std::cout<<s[0];
+
+    auto ex = Solution();
+    ex.reverseString(s);
+    ex.reverseString(s);
+    std::cout<<"s[0]: "<<s[0]<<std::endl;
+
+
     // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
     // testSet();
     // eraseSet();

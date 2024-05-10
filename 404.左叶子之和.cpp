@@ -57,6 +57,7 @@ public:
         if (!root){
             return 0;
         }
+        
         st.push(root);
         int ret = 0;
         while (!st.empty())
