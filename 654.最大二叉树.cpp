@@ -50,25 +50,27 @@ struct TreeNode
 
 class Solution {
 public:
-
-
-    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
-        
+    
+    typedef vector<int>::iterator  vIt;
+    TreeNode* traversal(vector<int>& nums,vIt left,vIt right) {
         if(nums.empty()){
             return nullptr;
         }  
         //{3,2,1,6,0,5}
-        
-        auto it = std::max_element(nums.begin(),nums.end());
-    
+        auto it = std::max_element(left,right);
+        if(it==right){
+            return nullptr;
+        }  
         TreeNode* node = new TreeNode(*it);
-    
-        vector<int> leftNode(nums.begin(),it);
-        vector<int> rightNode(it+1,nums.end());
         
-        node->left =constructMaximumBinaryTree(leftNode);
-        node->right =constructMaximumBinaryTree(rightNode);
+        //左闭右开
+        node->left  = traversal(nums,left,it);
+        node->right = traversal(nums,it+1,right);
         return node;
+    }
+
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        return traversal(nums,nums.begin(),nums.end());
     }
 };
 // @lc code=end
