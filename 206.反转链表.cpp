@@ -31,6 +31,8 @@
 #include <cstring>
 #include <cassert>
 #include <numeric>
+#include <memory>
+using namespace std;
 
 #ifndef LISTNODE_H
 #define LISTNODE_H
@@ -45,34 +47,23 @@ struct ListNode
 #endif // LISTNODE_H
 
 class Solution {
-
 public:
-
-
     ListNode* reverseList(ListNode* head) {
-        
-        //指针左
-        ListNode* left = nullptr; 
-        // 指针右
-        ListNode* right = head;
-        // 中间节点
-        ListNode* tmp;
+        ListNode* newNode =new ListNode();
+        auto cur = head;
+        while(head){
+            // 索引节点先走一步保存断点
+            head= head->next;
 
-        // 有时候分不清楚是判断当前节点 还是下一个几点为临界条件
-        while(right)
-        {
-            //保存下一个节点,先中断,后续回溯到此位置
-            tmp =right->next;
-            // 插入到返回节点后面
-            right->next =left;
-            // 指针后移保证链条增长
-            left=right;
-            // 回溯到正常链表,进行下一次循环
-            right=tmp;
+            // 将目标节点指向新链表的虚拟头节点和第一个元素中间
+            cur->next = newNode->next;
+            newNode->next =cur;
 
+            //索引到下一次遍历
+            cur=head;
         }
-        return left;
-
+        // 返回时去除虚拟头节点
+        return newNode->next;
     }
 };
 // @lc code=end
