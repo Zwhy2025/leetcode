@@ -26,22 +26,27 @@ using namespace std;
 
 class Solution {
 public:
+    // ascii + 数组大小
+    #define ARRAY_SIZE 129
     int lengthOfLongestSubstring(string s) {
-        std::size_t max =0;
+        int max =0;
         for (int i = 0; i < s.size(); i++)
         {
-            set<char> set;
+            int cmap[ARRAY_SIZE]={};
             for (int j = i; j < s.size(); j++)
             {
-                if(set.count(s[j])){
-                    set.clear();
+                //如果有重复的直接恢复出厂设置,到下一个点开始遍历
+                if( cmap[s[j]]){
+                    // 将所有元素设置为 0
+                    memset(cmap, 0, sizeof(cmap)); 
                     break;
                 }else{
-                    set.insert(s[j]);
-                    max = std::max(set.size(),max);
+                    // 更新哈希值 不重复的元素 最大字串
+                    cmap[s[j]]++;
+                    cmap[ARRAY_SIZE-1]++;
+                    max = std::max(cmap[ARRAY_SIZE-1],max);
                 }
             }
-
         }
         return max;
     }
