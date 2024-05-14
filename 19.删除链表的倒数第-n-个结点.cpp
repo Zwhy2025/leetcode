@@ -15,7 +15,24 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <queue>
+#include <stack>
+#include <unordered_map>
+#include <map>
+#include <set>
+#include <unordered_set>
+#include <cmath>
+#include <climits>
+#include <cctype>
+#include <cstring>
+#include <cassert>
+#include <numeric>
+#include <memory>
+using namespace std;
 #ifndef LISTNODE_H
 #define LISTNODE_H
 struct ListNode
@@ -28,41 +45,40 @@ struct ListNode
 };
 #endif // LISTNODE_H
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *removeNthFromEnd(ListNode *head, int n)
-    {
-        // 快慢指针
-        auto faker = new ListNode();
-        faker->next = head;
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        
+        //虚拟头节点,更好处理当前节点
+        auto fake = new ListNode();
+        fake->next = head;
 
-        auto back = faker;
-        auto front = faker;
+        //构造快慢指针
+        auto front = fake;
+        auto back = fake;
 
-        while (front->next != nullptr)
-        {
-            if (n > 0)///< 快指针先走
-            {
-                n--;
-                front = front->next;
-            }
-            else ///< 同时移动
-            {
-                front = front->next;
-                back = back->next;
-            }
+        // 快指针先走
+        while (n--){
+            front=front->next;
         }
-
-        // 删除节点
-        auto tmp = back->next;
-        back->next=back->next->next;
-
-        // 清理内存
-        delete tmp;
-        tmp=nullptr;
-
-        return faker->next;
+        
+        while (front)
+        {
+            // 快指针先走一步,如果为空,
+            // 则back下一个就是我们需要处理的节点
+            front=front->next;
+            if(!front){
+                // 我们一定可以确定back的下一个节点不为空
+                // 因为题目中的n最小为1
+                back->next =back->next->next;
+                break;
+            }
+            // 无事发生则继续走
+            back=back->next;
+        }
+        //  记得返回的是虚拟头节点的下一个
+        return fake->next;
     }
 };
 // @lc code=end
+
