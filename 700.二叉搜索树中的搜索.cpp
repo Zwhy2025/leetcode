@@ -53,35 +53,17 @@ class Solution
 public:
     TreeNode *searchBST(TreeNode *root, int val)
     {
-        queue<TreeNode *> qe;
-        if (!root){
+        if (!root || root->val == val){
             return root;
         }
-        qe.push(root);
-        while (!qe.empty())
-        {
-            int size = qe.size();
-            for (int i = 0; i < size; i++)
-            {
-                auto node = qe.front();
-                qe.pop();
-
-                //跳过叶子节点
-                if (!node){
-                    continue;
-                }
-
-                // 根据val的大小抉择左子树还是右子树
-                if (node->val > val){
-                    qe.push(node->left);
-                }else if (node->val < val){
-                    qe.push(node->right);
-                }else{ ///< 此时一定是val==node->val
-                    return node;
-                }
-            }
+        TreeNode *node = nullptr;
+        if (root->val > val){
+            node = searchBST(root->left, val);
         }
-        return nullptr;
+        if (root->val < val){
+            node = searchBST(root->right, val);
+        }
+        return node;
     }
 };
 // @lc code=end
