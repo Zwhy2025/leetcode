@@ -26,23 +26,18 @@ using namespace std;
 
 class Solution {
 public:
-    int _res =0;
-    void backtracking(int n,int sum){
-        if (n == sum){
-            _res++;
-            return;
-        }
-
-        for (int i = 1; i < 3 && sum<=n ; i++)
-        {
-            backtracking(n,sum+i);
-        }
-    }
 
     int climbStairs(int n) {
-        _res =0;
-        backtracking(n,0);
-        return _res; 
+        if(n<=1) return n;
+
+        vector<int> dp(n+1);
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++){
+            dp[i]=dp[i-1] +dp[i-2];
+        }
+        
+        return dp[n];
     }
 };
 // @lc code=end
