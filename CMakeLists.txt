@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(DesignPatterns)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
 # 设置C++标准
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -31,15 +33,14 @@ if(OpenCV_FOUND)
 else()
     message(FATAL_ERROR "OpenCV not found")
 endif()
-message(STATUS "GTest_LIBRARIES: ${OpenCV_LIBRARIES}")
-message(STATUS "GTest_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
-
-
+message(STATUS "OpenCV_LIBRARIES: ${OpenCV_LIBRARIES}")
+message(STATUS "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
 
 
 #include_directories(/usr/local/include/gtest)
 #link_directories(/usr/local/lib)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 # 设置输出路径
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
@@ -56,17 +57,14 @@ target_include_directories(leetcode PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(display display.cpp)
 target_link_libraries(display leetcode)
 
-# 创建可执行文件 test_leetcode
-add_executable(test_leetcode test_leetcode.cc)
-target_link_libraries(test_leetcode leetcode ${GTest_LIBRARIES})
-target_include_directories(test_leetcode PRIVATE ${GTest_INCLUDE_DIRS})
+# 创建可执行文件 test
+add_executable(test test.cc)
+target_link_libraries(test leetcode ${GTEST_BOTH_LIBRARIES})
+target_include_directories(test PRIVATE ${GTest_INCLUDE_DIRS})
 # 打印调试路径
 
 # 如果需要，链接pthread
 if(UNIX)
-    target_link_libraries(test_leetcode pthread)
+    target_link_libraries(test pthread )
 endif()
 
-# 添加测试
-## enable_testing()
-##add_test(NAME test_leetcode COMMAND test_leetcode)

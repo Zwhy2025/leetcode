@@ -226,6 +226,18 @@ void ptr_test(){
 //#include "344.反转字符串.cpp"
 #include "654.最大二叉树.cpp"
 
+#include "log.h"
+void test_log(){
+
+
+    INIT_LOG(LogLevel::DBUG);
+    LOG_DBUG<<"测试";
+    LOG_INFO<<"日志";
+    LOG_WARN<<"输出";
+    LOG_EROR<<"完毕";
+    getchar();
+}
+
 int main()
 {   
     std::cout<<"------------- begin -------------"<<std::endl;
@@ -238,7 +250,7 @@ int main()
     // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
     // testSet();
     // eraseSet();
-
+    test_log();
     //std::cout << calculate(47) << std::endl;
     //std::cout << canConstruct("aa", "aab");
 
