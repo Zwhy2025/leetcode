@@ -28,18 +28,17 @@ class Solution {
 public:
     int minCostClimbingStairs(vector<int>& cost) {
         int n =cost.size();
-        cout<<"n: "<<n<<endl;
-        if (n<3)
-        {
-             return std::min(*cost.begin(),cost.back());
+        if (n<2){
+             return 0;
         }
         
         vector<int> dp(n+1);
+        dp[0]=0;
         dp[1]=0;
-        dp[2]=std::min(cost[0],cost[1]);
-        
-        for (int i = 3; i <= n; i++)
-        {    
+
+        for (int i = 2; i <= n; i++)
+        {   
+            //状态方程 (启动费用+累计费用)
             dp[i]=min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
         }
     
