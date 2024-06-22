@@ -1,5 +1,7 @@
 /.vscode
 /test
 display
+test_leetcode
 a.out
 build/
+lib/
