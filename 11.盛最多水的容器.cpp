@@ -30,11 +30,12 @@ public:
     int maxArea(vector<int> &height)
     {
         int res = 0;
+        // 双指针
         for (int i = 0, j = height.size() - 1; i < j;)
         {
             int h = std::min(height[i], height[j]);
             int area = h * (j - i);
-
+            // 贪心 距离最远的最有可能最大面积
             res = std::max(area, res);
             if (height[i] > height[j]){
                 j--;
