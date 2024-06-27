@@ -24,20 +24,31 @@
 #include <memory>
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    void rotate(vector<int>& nums, int k) {
-        
+    void reverse(vector<int> &nums, int start, int end)
+    {
+        while (start < end){
+            std::swap(nums[start], nums[end]);
+            start += 1;
+            end -= 1;
+        }
+    }
+
+    void rotate(vector<int> &nums, int k)
+    {
+        int size = nums.size();
         k %= nums.size();
-        if(k==0) return;
-        
+        if (k == 0)
+            return;
+
         /// 反转整个数组
-        reverse(nums.begin(), nums.end());
+        this->reverse(nums, 0, size - 1);
         // 反转前 k 个元素
-        reverse(nums.begin(), nums.begin() + k);
+        this->reverse(nums, 0, k - 1);
         // 反转剩余的元素
-        reverse(nums.begin() + k, nums.end());
+        this->reverse(nums, k, size - 1);
     }
 };
 // @lc code=end
-
