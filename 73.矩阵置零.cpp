@@ -28,16 +28,16 @@ class Solution {
 public:
     void setZeroes(vector<vector<int>>& matrix) {
         
-        unordered_set<int> set_i;
-        unordered_set<int> set_j;
+        vector<int> set_i(matrix.size(),0);
+        vector<int> set_j(matrix[0].size(),0);
 
         for (int i = 0; i < matrix.size(); i++)
         {
            for (int j = 0; j < matrix[i].size(); j++)
            {
                 if(matrix[i][j]==0){
-                    set_i.insert(i);
-                    set_j.insert(j);
+                    set_i[i]++;
+                    set_j[j]++;
                 }
            }
         }
@@ -45,7 +45,7 @@ public:
         {
            for (int j = 0; j < matrix[i].size(); j++)
            {
-                if(set_i.count(i)||(set_j.count(j))){
+                if(set_i[i]||(set_j[j])){
                     matrix[i][j]=0;
                 }
            }
