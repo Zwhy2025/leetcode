@@ -49,23 +49,22 @@ struct ListNode
 
 class Solution {
 public:
-    ListNode* _tFront;
-    bool tick(ListNode* node){
-        // 思路大概能知道,代码能力实现不了一个需求
-        // return false 能传递到顶层,而 return true 需要继续判断
-        // 全局变量是好方法,如果不会使用二级指针的话(或者用不好)
-       if(node){
-            if(!tick((node->next))) return false;
-            if(node->val != _tFront->val) return false;
-            _tFront = _tFront->next;
-       }
-       return true;
-    }
-
-
-    bool isPalindrome(ListNode* head) {;
-        _tFront = head;
-        return tick(head);
+    bool isPalindrome(ListNode* head) {
+        // 转换链表为数组
+        vector<int> nums;
+        while (head){
+            nums.push_back(head->val);
+            head = head -> next;
+        }
+        // 头尾指针逼近
+        for (int i = 0,j=nums.size()-1; i < j; i++,j--)
+        {
+            if(nums[i]!=nums[j]){
+                return false;
+            }
+        }
+        
+        return true;
     }
 };
 // @lc code=end
