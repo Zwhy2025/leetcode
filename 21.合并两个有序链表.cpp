@@ -49,29 +49,29 @@ struct ListNode
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        map<int,int> map;
-        while (list1)
-        {
-            map[list1->val]++;
-            list1 =list1->next;
-        }
-
-        while (list2)
-        {
-            map[list2->val]++;
-            list2 =list2->next;
-        }
-        ListNode* head =new ListNode();
-        auto res = head;
-        for (auto &&m : map)
-        {
-           do
-           {
-             head->next = new ListNode(m.first);
-             head = head->next;
-           } while (--m.second);
-        }
         
+        ListNode* node = new ListNode();
+        auto res = node;
+        while(list1||list2){
+            if (!list1)
+            {
+                node->next = new ListNode(list2->val);
+                list2 = list2->next;
+            }else if (!list2)
+            {
+                node->next = new ListNode(list1->val);
+                list1 = list1->next;
+            }else{
+                if(list1->val>=list2->val){
+                    node->next = new ListNode(list2->val);
+                    list2 = list2->next;
+                }else{
+                    node->next = new ListNode(list1->val);
+                    list1 = list1->next;
+                }
+            }
+            node = node->next;
+        }
         return res->next;
     }
 };
