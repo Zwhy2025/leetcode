@@ -49,40 +49,49 @@ struct ListNode
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        
-        ListNode* node = new ListNode();
-        auto res = node;
-        while(list1||list2){
-            if (!list1)
-            {
-                node->next = new ListNode(list2->val);
-                list2 = list2->next;
-            }else if (!list2)
-            {
-                node->next = new ListNode(list1->val);
+        ListNode dummy(-1); //哨兵
+        ListNode* it = &dummy;
+
+        // 同时遍历两个链表
+        // 取得两个节点中最小的节点
+        // 不管怎么样记得指针往前对齐
+        while(list1 && list2)
+        {
+            if(list1->val <= list2->val){
+                it->next =list1;
                 list1 = list1->next;
             }else{
-                if(list1->val>=list2->val){
-                    node->next = new ListNode(list2->val);
-                    list2 = list2->next;
-                }else{
-                    node->next = new ListNode(list1->val);
-                    list1 = list1->next;
-                }
+                it->next = list2;
+                list2 = list2->next;
             }
-            node = node->next;
+            it = it->next;
         }
-        return res->next;
+        // 剩下节点直接拼接到后面
+        // 经过上述遍历 只会留下大于等于最后另一个链表的所有元素的链表
+       it->next = list1 ? list1 : list2;
+       return dummy.next;
     }
 };
 // @lc code=end
 
 #include <gtest/gtest.h>
-TEST(Test21, SimpleTest)
-{
+
+/**
+Testcase
+[-10,-10,-9,-4,1,6,6]
+[-7]
+Expected Answer
+[-10,-10,-9,-7,-4,1,6,6]
+ */
+TEST(Test21, SimpleTest){
     Solution s;
-    ListNode* list1 = new ListNode(1, new ListNode(2, new ListNode(4)));
-    ListNode* list2 = new ListNode(1, new ListNode(3, new ListNode(4)));
-    ListNode* ans = new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(4))))));
-    EXPECT_EQ(s.mergeTwoLists(list1, list2), ans);
+    ListNode* l1 = new ListNode(-10, new ListNode(-10, new ListNode(-9, new ListNode(-4, new ListNode(1, new ListNode(6, new ListNode(6)))))));
+    ListNode* l2 = new ListNode(-7);
+    ListNode* res = s.mergeTwoLists(l1, l2);
+    vector<int> ans = {-10,-10,-9,-7,-4,1,6,6};
+    for (int i = 0; i < ans.size(); i++)
+    {
+        EXPECT_EQ(res->val, ans[i]);
+        res = res->next;
+    }
 }
