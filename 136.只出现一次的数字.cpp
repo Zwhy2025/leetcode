@@ -28,14 +28,13 @@ using namespace std;
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-       unordered_multiset<int> set(nums.begin(),nums.end());
-       for (auto &&s : set)
-       {    
-            if(set.count(s)==1){
-                return s;
-            }
-       }
-        return INT_MIN;
+        int res = 0;
+        // 两个相同的值进行 ^ 运算得到0
+        // 连续 ^ 只会得到出现一次的数字 ^_^
+        for (int i = 0; i < nums.size(); i++){
+            res^=nums[i];
+        }
+        return res;
     }
 };
 // @lc code=end
