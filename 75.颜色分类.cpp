@@ -28,20 +28,15 @@ class Solution {
 public:
     void sortColors(vector<int>& nums)
     {
-        bool swapped = false;
         for (int i = 0; i < nums.size(); i++) {
-            bool swapped = false;
-            for (int j = i + 1; j < nums.size(); j++) {
 
+            for (int j = i + 1; j < nums.size(); j++) {
                 if (nums[i] > nums[j]) {
-                    swapped = true;
                     std::swap(nums[i], nums[j]);
                 }
+
             }
 
-            if (!swapped) {
-                break;
-            }
         }
     }
 };
@@ -50,9 +45,9 @@ public:
 #include<gtest/gtest.h>
 TEST(test75, test1)
 {
-    vector<int> nums = { 2,0,2,1,1,0 };
+    vector<int> nums = { 0, 2, 1, 2, 0 };
     Solution s;
     s.sortColors(nums);
-    vector<int> res = { 0,0,1,1,2,2 };
+    vector<int> res = { 0, 0, 1, 2, 2 };
     EXPECT_EQ(nums, res);
 }
