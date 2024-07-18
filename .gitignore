@@ -5,3 +5,4 @@ test_leetcode
 a.out
 build/
 lib/
+bin/
