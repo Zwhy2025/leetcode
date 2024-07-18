@@ -229,8 +229,6 @@ void ptr_test(){
 #include "log.h"
 void test_log(){
 
-
-    INIT_LOG(LogLevel::DBUG);
     LOG_DBUG<<"测试";
     LOG_INFO<<"日志";
     LOG_WARN<<"输出";
@@ -238,23 +236,36 @@ void test_log(){
     getchar();
 }
 
+
+void test_meeting(){
+    
+
+
+
+
+    
+
+}
+
 int main()
 {   
     std::cout<<"------------- begin -------------"<<std::endl;
-    vector<int> vet = {3,2,1,6,0,5};
-
-    auto ex = Solution();
-    ex.constructMaximumBinaryTree(vet);
-
+    INIT_LOG(LogLevel::DBUG);
+    LOG_INFO<<"INIT";
 
     // g++ /home/zwhy/leetcode/display.cpp -o /home/zwhy/leetcode/display && /home/zwhy/leetcode/display
     // testSet();
     // eraseSet();
-    test_log();
+    //test_log();
     //std::cout << calculate(47) << std::endl;
     //std::cout << canConstruct("aa", "aab");
 
     // findStr();
     // topSet();
+
+    
+
+    test_meeting();
+
     std::cout<<"------------- end -------------"<<std::endl;
 }
