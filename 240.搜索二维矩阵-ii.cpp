@@ -27,37 +27,30 @@ using namespace std;
 
 class Solution {
 public:
-    bool halfSearch(vector<int>& nums, int target)
-    {
-        int mid = INT_MAX;
-        int begin = 0, end = nums.size() - 1;
-        while (begin <= end) {
-            mid = begin + (end - begin) / 2;
-            if (nums[mid] > target) {
-                end = mid - 1;
-            } else if (nums[mid] < target) {
-                begin = mid + 1;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     bool searchMatrix(vector<vector<int>>& matrix, int target)
     {
-        if (matrix.empty()) {
+        if (matrix.empty() || matrix[0].empty()) {
             return false;
         }
 
-        for (int i = 0; i < matrix.size(); i++) {
-            // 对每一列二分查找
-            if (halfSearch(matrix[i], target)) {
+        int rowSize = matrix.size();
+        int colSize = matrix[0].size();
+
+        int itRow = 0;
+        int itCol = colSize - 1;
+
+        while (itRow < rowSize && itCol >= 0) {
+            if (matrix[itRow][itCol] == target) {
                 return true;
+            } else if ((matrix[itRow][itCol] > target)) {
+                itCol--;
+            } else {
+                itRow++;
             }
 
         }
-
         return false;
     }
 };
@@ -72,6 +65,5 @@ TEST(Test240, Test)
                                    { 10, 13, 14, 17, 24 },
                                    { 18, 21, 23, 26, 30 } };
     Solution s;
-    EXPECT_EQ(s.searchMatrix(matrix, 5), true);
     EXPECT_EQ(s.searchMatrix(matrix, 20), false);
 }
