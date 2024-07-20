@@ -26,23 +26,6 @@ using namespace std;
 
 class Solution {
 public:
-    bool halfSearch(vector<int>& nums, int target)
-    {
-        int mid = INT_MAX;
-        int start = 0, end = nums.size() - 1;
-        while (start <= end) {
-            mid = start + (end - start) / 2;
-            if (nums[mid] > target) {
-                end = mid - 1;
-            } else if (nums[mid] < target) {
-                start = mid + 1;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     bool searchMatrix(vector<vector<int>>& matrix, int target)
     {
@@ -50,13 +33,22 @@ public:
             return  false;
         }
 
-        for (auto&& nums : matrix) {
-            if (nums[0] <= target && nums.back() >= target) {
-                if (this->halfSearch(nums, target)) {
-                    return true;
-                }
+        int rowNums = matrix.size();
+        int colNums = matrix[0].size();
+
+        // 从左下角开始往上查找
+        int itRow = rowNums - 1, itCol = 0;
+
+        while (itCol < colNums && itRow >= 0) {
+            if (matrix[itRow][itCol] > target) {
+                itRow--;// 先找到所在元素的行
+            } else if (matrix[itRow][itCol] < target) {
+                itCol++;// 先找到所在元素的列
+            } else {
+                return true;
             }
         }
+
         return false;
     }
 };
@@ -64,14 +56,14 @@ public:
 
 
 #include <gtest/gtest.h>
-TEST(Test74, Test)
+TEST(Test74, SimpleTest)
 {
-    vector<vector<int>> matrix = {
-        {1},
-        {10},
-        {23}
+    Solution solution;
+    vector<vector<int>> vec = {
+        {1,3,5,7},
+        {10,11,16,20},
+        {23,30,34,60}
     };
-    Solution s;
-    EXPECT_EQ(s.searchMatrix(matrix, 3), false);
-    EXPECT_EQ(s.searchMatrix(matrix, 13), false);
+    EXPECT_EQ(solution.searchMatrix(vec, 3), true);
+    EXPECT_EQ(solution.searchMatrix(vec, 13), false);
 }
