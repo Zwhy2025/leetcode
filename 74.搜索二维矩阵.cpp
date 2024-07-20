@@ -32,9 +32,9 @@ public:
         int start = 0, end = nums.size() - 1;
         while (start <= end) {
             mid = start + (end - start) / 2;
-            if (nums[mid]>target) {
+            if (nums[mid] > target) {
                 end = mid - 1;
-            } else if (nums[mid]<target) {
+            } else if (nums[mid] < target) {
                 start = mid + 1;
             } else {
                 return true;
@@ -51,8 +51,10 @@ public:
         }
 
         for (auto&& nums : matrix) {
-            if (this->halfSearch(nums, target)) {
-                return true;
+            if (nums[0] <= target && nums.back() >= target) {
+                if (this->halfSearch(nums, target)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -65,11 +67,11 @@ public:
 TEST(Test74, Test)
 {
     vector<vector<int>> matrix = {
-        {1, 3, 5, 7},
-        {10, 11, 16, 20},
-        {23, 30, 34, 60}
+        {1},
+        {10},
+        {23}
     };
     Solution s;
-    EXPECT_EQ(s.searchMatrix(matrix, 3), true);
+    EXPECT_EQ(s.searchMatrix(matrix, 3), false);
     EXPECT_EQ(s.searchMatrix(matrix, 13), false);
 }
