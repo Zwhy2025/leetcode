@@ -49,25 +49,35 @@ struct TreeNode
 #endif // LISTNODE_H
 class Solution {
 public:
-    TreeNode* tickTree(vector<int>& nums, int start, int end)
+    TreeNode* traverseTree(vector<int>& nums, int start, int end)
     {
         if (start > end) {
             return nullptr;
         }
 
+        // 由于平衡二叉树左右两边的节点数相差不超过1，
+        // 所以每次取中间节点作为根节点,则符合此定义
         int mid = start + (end - start) / 2;
-
-        auto root = new TreeNode(nums[mid]);
-
-        root->left = tickTree(nums, start, mid - 1);
-        root->right = tickTree(nums, mid + 1, end);
-        return root;
+        TreeNode* node = new TreeNode(nums[mid]);
+        
+        // 由于数组有序,递归构造即可
+        node->left = traverseTree(nums, start, mid - 1);
+        node->right = traverseTree(nums, mid + 1, end);
+        return node;
     }
+
 
     TreeNode* sortedArrayToBST(vector<int>& nums)
     {
-        return tickTree(nums, 0, nums.size()-1);
+        return traverseTree(nums, 0, nums.size() - 1);
     }
 };
 // @lc code=end
 
+#include <gtest/gtest.h>
+TEST(Test108, Test)
+{
+    Solution s;
+    vector<int> nums = { -10, -3, 0, 5, 9 };
+    s.sortedArrayToBST(nums);
+}
