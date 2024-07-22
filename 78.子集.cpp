@@ -4,7 +4,7 @@
  * [78] 子集
  */
 
-// @lc code=start
+ // @lc code=start
 #include <iostream>
 #include <vector>
 #include <string>
@@ -26,26 +26,50 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<int>> _ret;
-    vector<int> _path;
-    void backtracking(vector<int>& nums,int startIndex){
-        // 子集问题 = 收集所有节点,而不是只有叶子节点
-        _ret.push_back(_path);
+    vector<int> _vnPath;
+    vector<vector<int>> _vnRes;
 
-        for(int  i = startIndex; i < nums.size(); i++)
-        {
-          _path.push_back((nums[i]));
-          backtracking(nums,i+1);
-          _path.pop_back();
-        }
+    void backtracking(vector<int>& nums, int startIndex)
+    {
+        _vnRes.push_back(_vnPath);
+          
+        for (int i = startIndex; i < nums.size(); i++)
+        {   
+            _vnPath.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            _vnPath.pop_back();
+        }   
+        
     }
 
-    vector<vector<int>> subsets(vector<int>& nums) {
-        _ret.clear();
-        _path.clear();
-        backtracking(nums,0);
-        return _ret;
+    vector<vector<int>> subsets(vector<int>& nums)
+    {
+        _vnRes.clear();
+        _vnPath.clear();
+
+        backtracking(nums, 0);
+        return _vnRes;
     }
 };
 // @lc code=end
 
+
+#include <gtest/gtest.h>
+TEST(Test78, Test)
+{
+    vector<int> nums = { 1, 2, 3 };
+    Solution s;
+    vector<vector<int>> res = s.subsets(nums);
+    
+    vector<vector<int>> expected = {
+        { 3 },
+        { 1 },
+        { 2 },
+        { 1, 2, 3 },
+        { 1, 3 },
+        { 2, 3 },
+        { 1, 2 },
+        {}
+    };
+    EXPECT_EQ(res, expected);
+}
