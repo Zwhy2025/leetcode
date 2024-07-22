@@ -27,23 +27,28 @@ using namespace std;
 class Solution {
 public:
     int minCostClimbingStairs(vector<int>& cost) {
-        int n =cost.size();
-        if (n<2){
-             return 0;
-        }
-        
-        vector<int> dp(n+1);
-        dp[0]=0;
-        dp[1]=0;
 
-        for (int i = 2; i <= n; i++)
-        {   
-            //状态方程 (启动费用+累计费用)
-            dp[i]=min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
+        vector<int> dp(cost.size()+1,0);
+        dp[0] = 0;
+        dp[1] = 0;
+
+        for (int i = 2; i < dp.size(); i++)
+        {
+            dp[i] = std::min(dp[i-1]+cost[i-1] ,dp[i-2]+cost[i-2]);
         }
-    
-        return dp[n];
+        return dp[cost.size()];
     }
 };
 // @lc code=end
 
+#include <gtest/gtest.h>
+TEST(Test746, Test)
+{
+    Solution s;
+    vector<int> cost = { 10, 15, 20 };
+    ASSERT_EQ(15, s.minCostClimbingStairs(cost));   
+
+    vector<int> cost1 = { 1, 100, 1, 1, 1, 100, 1, 1, 100, 1 };
+    ASSERT_EQ(6, s.minCostClimbingStairs(cost1));
+
+}
