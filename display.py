@@ -6,7 +6,7 @@ import argparse
 
 # 可调整的参数
 QUESTION_LOG_FILE = "题目日志.json"
-DAYS_LIMIT = 10  # 十天内不重复
+DAYS_LIMIT = 20  # 二十天内不重复
 QUESTIONS_PER_RUN = 2  # 每次运行选择的题目数量
 
 def get_question_list():
