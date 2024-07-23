@@ -4,16 +4,18 @@
  * [75] 颜色分类
  */
 
+ // @lc code=start
 #include <iostream>
-#include <vector>
 #include <string>
-#include <algorithm>
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
 #include <queue>
 #include <stack>
 #include <unordered_map>
-#include <map>
-#include <set>
 #include <unordered_set>
+#include <algorithm>
 #include <cmath>
 #include <climits>
 #include <cctype>
@@ -23,31 +25,37 @@
 #include <memory>
 using namespace std;
 
-// @lc code=start
 class Solution {
 public:
-    void sortColors(vector<int>& nums)
+    void selectSorting(vector<int>& nums)
     {
+        //选择排序
         for (int i = 0; i < nums.size(); i++) {
-
             for (int j = i + 1; j < nums.size(); j++) {
-                if (nums[i] > nums[j]) {
-                    std::swap(nums[i], nums[j]);
+                // 进行n次循环,每次循环比较n到1次,将最小的元素选择出来
+                if (nums[j] < nums[i]) {
+                    std::swap(nums[j], nums[i]);
                 }
 
             }
 
         }
     }
+
+    void sortColors(vector<int>& nums)
+    {
+        this->selectSorting(nums);
+    }
 };
 // @lc code=end
 
-#include<gtest/gtest.h>
-TEST(test75, test1)
+#include <gtest/gtest.h>
+
+TEST(Test75, Test1)
 {
-    vector<int> nums = { 0, 2, 1, 2, 0 };
+    vector<int> nums = { 2,0,2,1,1,0 };
     Solution s;
     s.sortColors(nums);
-    vector<int> res = { 0, 0, 1, 2, 2 };
+    vector<int> res = { 0,0,1,1,2,2 };
     EXPECT_EQ(nums, res);
 }
