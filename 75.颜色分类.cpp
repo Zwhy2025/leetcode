@@ -42,9 +42,26 @@ public:
         }
     }
 
+    void bubbleSorting(vector<int>& nums)
+    {
+        for (int i = 0; i < nums.size(); i++) {
+            bool isSwap = false;
+            for (int j = 1; j < nums.size()-1; j++) {
+                if (nums[j - 1] > nums[j]) {
+                    isSwap = true;
+                    std::swap(nums[j - 1], nums[j]);
+                }
+            }
+            if (!isSwap) {
+                break;
+            }
+
+        }
+    }
+
     void sortColors(vector<int>& nums)
     {
-        this->selectSorting(nums);
+        this->bubbleSorting(nums);
     }
 };
 // @lc code=end
