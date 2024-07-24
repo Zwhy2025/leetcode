@@ -4,17 +4,18 @@
  * [560] 和为 K 的子数组
  */
 
-// @lc code=start
+ // @lc code=start
 #include <iostream>
-#include <vector>
 #include <string>
-#include <algorithm>
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
 #include <queue>
 #include <stack>
 #include <unordered_map>
-#include <map>
-#include <set>
 #include <unordered_set>
+#include <algorithm>
 #include <cmath>
 #include <climits>
 #include <cctype>
@@ -26,27 +27,25 @@ using namespace std;
 
 class Solution {
 public:
-    int subarraySum(vector<int>& nums, int k) {
-
-        //构造前缀和数组
-        vector<int> vfront(nums.size()+1,0);
-        for (int i = 0; i < nums.size(); i++)
-        {
-            vfront[i+1] = vfront[i]+nums[i];
+    int subarraySum(vector<int>& nums, int k)
+    {
+        vector<int> vPreSum(nums.size() + 1, 0);
+        for (int i = 0; i < nums.size(); i++) {
+            vPreSum[i + 1] = vPreSum[i] + nums[i];
         }
+
         int res = 0;
-        unordered_map<int,int> map;
-        // 遍历前缀和
-        for(int it : vfront){
-            if(map.find(it - k) != map.end()){
-                // 隐含了一个信息,第一次遍历时
-                // 前缀和为0,会使得map[0] = 1
-                // 后续会记录前缀和 
-                // 如果有前缀和 能与 it-k 相等
-                // 说明这两个前缀和之间的子数组和为k
-                // 也符合题意
-                // 这也太tm巧妙了
-                res += map[it-k];
+        unordered_map<int, int> map;
+        // 假设数组的前缀和数组为prefixSum，
+        // 其中prefixSum[i]表示从数组起始位置到第i个位置的元素之和。那么对于任意的两个下标i和j（i < j），
+        // 如果prefixSum[j] - prefixSum[i] = k，即从第i个位置到第j个位置的元素之和等于k，
+        // 那么说明从第i+1个位置到第j个位置的连续子数组的和为k
+        
+        // 总结 前缀和之差 表示连续子串和为K
+        // 转换解题公式:   prefixSum[i] = prefixSum[j] - k
+        for (auto&& it : vPreSum) {
+            if (map.find(it - k) != map.end()) {
+                res += map[it - k];
             }
             map[it]++;
         }
@@ -56,12 +55,11 @@ public:
 // @lc code=end
 
 #include <gtest/gtest.h>
-#include "log.h"
-TEST(Test560, SimpleTest){
-    vector<int> nums = {1,1,1};
-    int k = 2;
+TEST(Test560, SimpleTest)
+{
     Solution s;
-    int res = s.subarraySum(nums, k);
-    int expect = 2;
-    EXPECT_EQ(res, expect);
+    vector<int> nums = { 1, 2, 3 };
+    ASSERT_EQ(2, s.subarraySum(nums, 3));
+    nums = { 1, 2, 3 };
+    ASSERT_EQ(2, s.subarraySum(nums, 3));
 }
