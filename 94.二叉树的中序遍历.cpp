@@ -4,18 +4,18 @@
  * [94] 二叉树的中序遍历
  */
 
-// @lc code=start
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+ // @lc code=start
+ /**
+  * Definition for a binary tree node.
+  * struct TreeNode {
+  *     int val;
+  *     TreeNode *left;
+  *     TreeNode *right;
+  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  * };
+  */
 #include <iostream>
 #include <vector>
 #include <string>
@@ -34,44 +34,41 @@
 #include <numeric>
 #include <memory>
 using namespace std;
+
 #ifndef LISTNODE_H
 #define LISTNODE_H
 struct TreeNode
 {
     int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int value) : val(value), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() :val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int value) :val(value), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 #endif // LISTNODE_H
 
-class Solution
-{
+class Solution {
 public:
-    vector<int> inorderTraversal(TreeNode *root)
-    {
-        vector<int> ret;
-        stack<TreeNode* > st;
-        auto node = root;
-        while (node != nullptr || !st.empty())
-        {
-            //一直索引到最底部
-            if (node != nullptr){
-                st.push(node);              
-                node = node->left;          ///<左
-            }
-            else{
-                node = st.top();
-                st.pop();
-                ret.push_back(node->val);   //中
-                node = node->right;         ///<右边
-            }
-        }
-        
 
-        return ret;
+    vector<int> _res;
+
+    void checkTree(TreeNode* node)
+    {
+        if (!node) {
+            return;
+        }
+        checkTree(node->left);
+        _res.push_back(node->val);
+        checkTree(node->right);
+
+    }
+    vector<int> inorderTraversal(TreeNode* root)
+    {
+        _res.clear();
+        this->checkTree(root);
+        return _res;
     }
 };
 // @lc code=end
+
