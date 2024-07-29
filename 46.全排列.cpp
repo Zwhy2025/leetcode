@@ -23,39 +23,51 @@
 #include <numeric>
 #include <memory>
 using namespace std;
-
 class Solution {
 public:
-
-    vector<vector<int>> _res;
     vector<int> _path;
-    
-    void backtracking(vector<int>& nums, vector<bool>& used)
+    vector<vector<int>> _res;
+
+    void backtracking(vector<int>& nums, vector<int>& used)
     {
         if (_path.size() == nums.size()) {
             _res.push_back(_path);
+            return;
         }
 
         for (int i = 0; i < nums.size(); i++) {
-            // 登记used数组在每次深度遍历时候不使用重复元素
-            // 而旁系叶子节点不被used影响,因为已经回溯
-            if (used[i] == true) continue;
-
-            used[i] = true;
-            _path.push_back(nums[i]);
-            backtracking(nums, used);
-            _path.pop_back();
-            used[i] = false;
+            if (!used[i]){
+                used[i]++;
+                _path.push_back(nums[i]);
+                backtracking(nums, used);
+                _path.pop_back();
+                used[i]--;
+            }
         }
     }
+
     vector<vector<int>> permute(vector<int>& nums)
     {
-        _path.clear();
         _res.clear();
-        vector<bool> used(nums.size(), false);
+        _path.clear();
+        vector<int> used(nums.size(), 0);
         backtracking(nums, used);
         return _res;
     }
 };
 // @lc code=end
 
+
+#include <gtest/gtest.h>
+TEST(LeetCode46, test1)
+{
+    Solution s;
+    vector<int> nums = { 1, 2, 3 };
+    vector<vector<int>> res = s.permute(nums);
+    for (auto& v : res) {
+        for (auto& i : v) {
+            cout << i << " ";
+        }
+        cout << endl;
+    }
+}
