@@ -4,18 +4,18 @@
  * [222] 完全二叉树的节点个数
  */
 
-// @lc code=start
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+ // @lc code=start
+ /**
+  * Definition for a binary tree node.
+  * struct TreeNode {
+  *     int val;
+  *     TreeNode *left;
+  *     TreeNode *right;
+  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  * };
+  */
 #include <iostream>
 #include <vector>
 #include <string>
@@ -34,52 +34,43 @@
 #include <numeric>
 #include <memory>
 using namespace std;
+
 #ifndef LISTNODE_H
 #define LISTNODE_H
 struct TreeNode
 {
     int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int value) : val(value), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() :val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int value) :val(value), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 #endif // LISTNODE_H
-
-class Solution
-{
+class Solution {
 public:
-    int travTree(TreeNode *node)
+    int countNodes(TreeNode* root)
     {
-        if (!node)return 0;
-        
-        TreeNode *left = node->left;
-        TreeNode *right = node->right;
-        int leftDepth = 0, rightDepth = 0;
-        
-        while (left){
-            left = left->left;
-            leftDepth++;
-        }
-        while (right){
-            right = right->right;
-            rightDepth++;
-        }
-        if(leftDepth==rightDepth){
-            //计算完全二叉树节点公式
-            return (2 <<leftDepth) -1;
+        int res = 0;
+        std::queue<TreeNode*> qe;
+        if (!root) {
+            return res;
         }
 
-        int leftTreeNum = travTree(node->left);         // 左
-        int rightTreeNum = travTree(node->right);       // 右
-        int result = leftTreeNum + rightTreeNum + 1;    // 中
-        return result;    
-    }
+        qe.push(root);
+        while (!qe.empty()) {
 
-    int countNodes(TreeNode *root)
-    {
-        return travTree(root);
+            int size = qe.size();
+            for (int i = 0; i < size; i++) {
+                res++;
+                auto node = qe.front();
+                if (node->left) qe.push(node->left);
+                if (node->right) qe.push(node->right);
+                qe.pop();
+            }
+        }
+        return res;
     }
 };
 // @lc code=end
+
