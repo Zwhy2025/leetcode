@@ -51,25 +51,29 @@ class Solution {
 public:
     int countNodes(TreeNode* root)
     {
-        int res = 0;
-        std::queue<TreeNode*> qe;
         if (!root) {
-            return res;
+            return 0;
         }
 
-        qe.push(root);
-        while (!qe.empty()) {
+        TreeNode* left = root->left;
+        TreeNode* right = root->right;
 
-            int size = qe.size();
-            for (int i = 0; i < size; i++) {
-                res++;
-                auto node = qe.front();
-                if (node->left) qe.push(node->left);
-                if (node->right) qe.push(node->right);
-                qe.pop();
-            }
+        int leftDepth = 0, rightDepth = 0;
+        while (left) {
+            left = left->left;
+            leftDepth++;
         }
-        return res;
+
+        while (right) {
+            right = right->right;
+            rightDepth++;
+        }
+
+        // 如果此次递归不为完全二叉树,则会一直递归计算
+        if (leftDepth == rightDepth) {
+            return (2 << leftDepth) - 1;
+        }
+        return countNodes(root->left) + countNodes(root->right) + 1;
     }
 };
 // @lc code=end
