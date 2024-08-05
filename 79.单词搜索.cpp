@@ -24,48 +24,61 @@
 #include <memory>
 using namespace std;
 
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <queue>
+#include <stack>
+#include <unordered_map>
+#include <map>
+#include <set>
+#include <unordered_set>
+#include <cmath>
+#include <climits>
+#include <cctype>
+#include <cstring>
+#include <cassert>
+#include <numeric>
+#include <memory>
+using namespace std;
+
 class Solution {
 public:
 
-    bool backtracking(vector<vector<char>>& board, string& word,
-        int row, int col, int index)
+    bool backtracking(vector<vector<char>>& board, string word, int index, int row, int col)
     {
-        // 边界判定以及当前值判定
-        if (row<0 || row>= board.size() || col < 0 || col >= board[0].size()
-            || board[row][col] != word[index]) {
+        if (row < 0 || row >= board.size() ||
+            col < 0 || col >= board[0].size() ||
+            board[row][col] != word[index]) {
             return false;
         }
-        // 回溯算法终止条件
+
         if (index == word.size() - 1) {
-            return true;
+            return  true;
         }
 
         char temp = board[row][col];
         board[row][col] = '/';
-        // 找到一条路径一直返回到顶端
-        bool result = ( backtracking(board, word, row+1, col, index+1) ||
-                        backtracking(board, word, row-1, col, index+1) ||
-                        backtracking(board, word, row, col+1, index+1) ||
-                        backtracking(board, word, row, col-1, index+1));
-        // 标记使用过的单元,防止循环引用
+        bool res = (backtracking(board, word, index + 1, row + 1, col) ||
+                    backtracking(board, word, index + 1, row, col + 1) ||
+                    backtracking(board, word, index + 1, row - 1, col) ||
+                    backtracking(board, word, index + 1, row, col - 1));
         board[row][col] = temp;
 
-        return result;
-
+        return res;
     }
 
     bool exist(vector<vector<char>>& board, string word)
     {
-        // 找到字符串开头的字符后进行回溯
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board[0].size(); j++) {
-                if (backtracking(board, word, i, j, 0)) {
+                if (backtracking(board, word, 0, i, j)) {
                     return true;
-                } 
+                }
             }
         }
         return false;
-
     }
 };
 // @lc code=end
