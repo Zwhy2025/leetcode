@@ -4,32 +4,25 @@
  * [48] 旋转图像
  */
 
- // @lc code=start
+// @lc code=start
+
 #include <iostream>
-#include <string>
 #include <vector>
+#include <string>
 #include <list>
-#include <map>
 #include <set>
-#include <queue>
-#include <stack>
+#include <map>
 #include <unordered_map>
 #include <unordered_set>
+#include <queue>
+#include <stack>
+#include <deque>
 #include <algorithm>
-#include <cmath>
-#include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
 using namespace std;
 
 class Solution {
 public:
-    void rotate(vector<vector<int>>& matrix)
-    {
-        //找规律题 顺时针旋转=矩阵转置+矩阵逐行翻转
+    void rotate(vector<vector<int>>& matrix) {
         int n = matrix.size();
       
         for (int i = 0; i < n; ++i) {
