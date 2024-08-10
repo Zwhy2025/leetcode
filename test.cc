@@ -17,8 +17,6 @@
 #include <memory>
 
 #include <gtest/gtest.h>
-#include "test/test_leetcode.cpp"
-
 //#include "617.合并二叉树.cpp"
 
 #include <iostream>
