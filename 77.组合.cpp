@@ -24,30 +24,32 @@
 #include <memory>
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    vector<vector<int>> result;
-    vector<int> path;
+    vector<vector<int>> _res;
+    vector<int> _path;
 
-    void backtracking(int n,int k, int startIndex){
-        if(path.size()==k){
-            result.push_back(path);
+    void backtracking(int n, int k, int index)
+    {
+        if (_path.size() == k){
+            _res.push_back(_path);
             return;
         }
 
-        for(int i = startIndex; i<=n-(k-path.size())+1;i++){
-            path.push_back(i);
-            backtracking(n,k,i+1);
-            path.pop_back();
+        for (int i = index; i <= n; i++){
+            _path.push_back(i);
+            backtracking(n, k, i + 1);
+            _path.pop_back();
         }
     }
 
-    vector<vector<int>> combine(int n, int k) {
-        result.clear();
-        path.clear();
-        backtracking(n,k,1);
-        return result;
+    vector<vector<int>> combine(int n, int k)
+    {
+        _res.clear();
+        _path.clear();
+        backtracking(n, k, 1);
+        return _res;
     }
 };
 // @lc code=end
-
