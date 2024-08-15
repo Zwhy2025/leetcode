@@ -17,8 +17,8 @@
 #include <memory>
 
 #include <gtest/gtest.h>
-//#include "617.合并二叉树.cpp"
-
+// #include "617.合并二叉树.cpp"
+#include "22.括号生成.cpp"
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -77,9 +77,6 @@
 
 // }
 
-
-
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -101,23 +98,22 @@
 #include <iostream>
 #include <bitset>
 
-
 using namespace std;
 
-class Solution {
-public:
-    vector<int> shortestDistanceAfterQueries(int n, vector<vector<int>>& queries) {
-        
-    }
-};
+// class Solution {
+// public:
+//     int countGoodNodes(vector<vector<int>>& edges) {
 
-TEST(SimpleTest, SimpleTest)
-{
+//     }
+// };
 
-}
+// TEST(SimpleTest, SimpleTest) {
+//     Solution s;
+// }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
+
+    vector<vector<int>> edges = {{0,1},{1,2},{2,3},{3,4},{4,5}};
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
