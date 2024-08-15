@@ -8,59 +8,66 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
-#include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
+#include <deque>
+#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
-    vector<string> _vRes;
-    string _strPath;
-    void _backtracking(int n, int l, int r)
-    {
-        if (l > n || l < r) { // 剪枝
-            return;///< 这是这题的精髓,本质上回溯就是枚举,然后剪枝不符合条件的
-        }
+    vector<string> _res;
+    string _path;
 
-        if (_strPath.size() == 2 * n) {
-            _vRes.push_back(_strPath);
+    void backtracking(int n, int l, int r) {
+
+        // 不仅仅是减枝,还确保逻辑
+        if (l > n || l < r) {
+            // 只在序列仍然保持有效时才添加 ‘(’ 或 ‘)’
             return;
         }
 
-        // 意识到括号匹配就是二进制,进行交替打印
+        if (_path.size() == n * 2) {
+            _res.push_back(_path);
+            return;
+        }
+
         for (int i = 0; i < 2; i++) {
             if (i == 0) {
-                _strPath.push_back('(');
-                _backtracking(n, l + 1, r);
-            } else {
-                _strPath.push_back(')');
-                _backtracking(n, l, r + 1);
-
+                _path.push_back('(');
+                backtracking(n, l + 1, r);
             }
-            _strPath.pop_back();
+            else {
+                _path.push_back(')');
+                backtracking(n, l, r + 1);
+            }
+            _path.pop_back();
         }
 
     }
 
-    vector<string> generateParenthesis(int n)
-    {
-        _vRes.clear();
-        _strPath.clear();
-        _backtracking(n, 0, 0);
-        return  _vRes;
+
+    vector<string> generateParenthesis(int n) {
+        _res.clear();
+        _path.clear();
+        this->backtracking(n, 0, 0);
+        return _res;
+
     }
 };
 // @lc code=end
 
+#include<gtest/gtest.h>
+
+TEST(LeetCode22, test1) {
+    Solution s;
+    vector<string> res = s.generateParenthesis(3);
+    for (auto& str : res) {
+        cout << str << endl;
+    }
+}
