@@ -4,7 +4,7 @@
  * [53] 最大子数组和
  */
 
-// @lc code=start
+ // @lc code=start
 #include <iostream>
 #include <vector>
 #include <string>
@@ -24,26 +24,19 @@
 #include <memory>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int maxSubArray(vector<int> &nums)
-    {
-        int res = INT_MIN;
-        int count = 0;
-        for (int i = 0; i < nums.size(); i++)
-        {
-            count += nums[i];
-            if (count > res){
-                res = count;
-            }
-            
-            if (count <= 0){
-                count = 0;
+    int maxSubArray(vector<int>& nums) {
+        int maxSum = INT_MIN;
+        int currentSum = 0;
+        for (int num : nums) {
+            currentSum += num;
+            maxSum = std::max(maxSum, currentSum);
+            if (currentSum < 0) {
+                currentSum = 0;
             }
         }
-
-        return res;
+        return maxSum;
     }
 };
 // @lc code=end
