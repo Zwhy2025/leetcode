@@ -37,8 +37,7 @@ using namespace std;
 
 #ifndef LISTNODE_H
 #define LISTNODE_H
-struct TreeNode
-{
+struct TreeNode {
     int val;
     TreeNode* left;
     TreeNode* right;
@@ -53,20 +52,18 @@ public:
 
     vector<int> _res;
 
-    void checkTree(TreeNode* node)
-    {
+    void tickTree(TreeNode* node) {
         if (!node) {
             return;
         }
-        checkTree(node->left);
-        _res.push_back(node->val);
-        checkTree(node->right);
 
+        tickTree(node->left);
+        _res.push_back(node->val);
+        tickTree(node->right);
     }
-    vector<int> inorderTraversal(TreeNode* root)
-    {
+    vector<int> inorderTraversal(TreeNode* root) {
         _res.clear();
-        this->checkTree(root);
+        this->tickTree(root);
         return _res;
     }
 };
