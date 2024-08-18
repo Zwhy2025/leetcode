@@ -28,15 +28,24 @@ class Solution {
 public:
     int findDuplicate(vector<int>& nums)
     {
-        unordered_map<int, bool> map;
-        for (auto&& num : nums) {
-            if (map[num]) {
-                return num;
-            }
-            map[num] = true;
 
+        int slow = nums[0];
+        int fast = nums[0];
+    
+        // 找到相遇点
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+        
+        // 找到环的入口
+        slow = nums[0];
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
         }
-        return INT_MIN;
+        // 入口即为重复元素
+        return slow;
     }
 };
 // @lc code=end
