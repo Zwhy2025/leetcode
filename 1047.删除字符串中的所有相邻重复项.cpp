@@ -8,47 +8,31 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
-#include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
+#include <deque>
+#include <algorithm>
 using namespace std;
+
 
 class Solution {
 public:
     string removeDuplicates(string s) {
-        stack<char> stack;
-        for(auto ch : s){
-            // 这里很关键的一点是 消消乐第二轮
-            // 其实 会继续判断
-            // 刚开始脑子卡了 外面加了一个循环
-            if (!stack.empty()&&stack.top()==ch)
-            {
-                stack.pop();
+        string res;
+        for (auto &&ch : s)
+        {
+            if(!res.empty()&&res.back()==ch){
+                res.pop_back();
             }else{
-                stack.push(ch);
+                res.push_back(ch);
             }
         }
-        s.clear();
-        while (!stack.empty())
-        {
-            s.push_back(stack.top());
-            stack.pop();
-        }
-
-        // 经过一轮入栈之后,顺序其实逆序了
-        reverse(s.begin(), s.end());
-        return s;
+        return res;
     }
 };
 // @lc code=end
