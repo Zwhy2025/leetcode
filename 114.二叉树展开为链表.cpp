@@ -4,74 +4,75 @@
  * [114] 二叉树展开为链表
  */
 
-// @lc code=start
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+ // @lc code=start
+ /**
+  * Definition for a binary tree node.
+  * struct TreeNode {
+  *     int val;
+  *     TreeNode *left;
+  *     TreeNode *right;
+  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  * };
+  */
 
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
-#include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
+#include <deque>
+#include <algorithm>
 using namespace std;
+
 
 #ifndef LISTNODE_H
 #define LISTNODE_H
-struct TreeNode
-{
+struct TreeNode {
     int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode():val(0),left(nullptr),right(nullptr) {}
-    TreeNode(int value):val(value),left(nullptr),right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() :val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int value) :val(value), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 #endif // LISTNODE_H
 
 class Solution {
 public:
-    vector<TreeNode*> _vNodes;
+    vector<TreeNode*> _vNodeList;
 
-    void tickTree(TreeNode* node){
-        if(!node){
+    void tickTree(TreeNode* node) {
+        if (node == nullptr) {
             return;
         }
-        _vNodes.push_back(node);
+
+        _vNodeList.push_back(node);
         tickTree(node->left);
         tickTree(node->right);
     }
+
+
     void flatten(TreeNode* root) {
+        _vNodeList.clear();
         tickTree(root);
-        TreeNode* dummy = new TreeNode(-1);
-        auto it = dummy;
-        for (int i = 0; i < _vNodes.size(); i++)
-        {
-            it->left =nullptr;
-            it->right =_vNodes[i];
-            it = it->right;
+
+        if (_vNodeList.empty()) {
+            return;
         }
-        root = dummy;
+
+        std::cout << _vNodeList.size() << std::endl;
+
+        for (int i = 0; i < _vNodeList.size() - 1; i++) {
+            _vNodeList[i]->right = _vNodeList[i + 1];
+            _vNodeList[i]->left = nullptr; // 确保 left 指针为 nullptr
+        }
     }
 };
 // @lc code=end
