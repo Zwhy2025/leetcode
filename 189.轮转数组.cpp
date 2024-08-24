@@ -5,50 +5,33 @@
  */
 
 // @lc code=start
+
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
-#include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
+#include <deque>
+#include <algorithm>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    void reverse(vector<int> &nums, int start, int end)
-    {
-        while (start < end){
-            std::swap(nums[start], nums[end]);
-            start += 1;
-            end -= 1;
-        }
-    }
+    void rotate(vector<int>& nums, int k) {
 
-    void rotate(vector<int> &nums, int k)
-    {
-        int size = nums.size();
-        k %= nums.size();
-        if (k == 0)
-            return;
+        int index = k % nums.size();
 
-        /// 反转整个数组
-        this->reverse(nums, 0, size - 1);
-        // 反转前 k 个元素
-        this->reverse(nums, 0, k - 1);
-        // 反转剩余的元素
-        this->reverse(nums, k, size - 1);
+        std::reverse(nums.begin(),nums.end());
+
+        std::reverse(nums.begin(),nums.begin()+index);
+
+        std::reverse(nums.begin()+index,nums.end());
     }
 };
 // @lc code=end
+
