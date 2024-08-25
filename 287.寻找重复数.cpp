@@ -5,47 +5,33 @@
  */
 
  // @lc code=start
+
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
+#include <deque>
+#include <algorithm>
 #include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
 using namespace std;
 
 class Solution {
 public:
-    int findDuplicate(vector<int>& nums)
-    {
-
-        int slow = nums[0];
-        int fast = nums[0];
-    
-        // 找到相遇点
-        do {
-            slow = nums[slow];
-            fast = nums[nums[fast]];
-        } while (slow != fast);
-        
-        // 找到环的入口
-        slow = nums[0];
-        while (slow != fast) {
-            slow = nums[slow];
-            fast = nums[fast];
+    int findDuplicate(vector<int>& nums) {
+        unordered_map<int, bool> mapCaches;
+        for (auto&& num : nums) {
+            if (mapCaches[num]) {
+                return  num;
+            }
+            mapCaches[num] =true;
         }
-        // 入口即为重复元素
-        return slow;
+        return INT_MAX;
     }
 };
 // @lc code=end
