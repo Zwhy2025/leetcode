@@ -8,47 +8,33 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
+#include <deque>
 #include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
+#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
-    // ascii + 数组大小
-    #define ARRAY_SIZE 129
     int lengthOfLongestSubstring(string s) {
-        int max =0;
-        for (int i = 0; i < s.size(); i++)
+        
+        unordered_map<char,int> dict;
+        int i = -1 ,res =0, len = s.size();
+        for (int j = 0;  j< s.size();  j++)
         {
-            int cmap[ARRAY_SIZE]={};
-            for (int j = i; j < s.size(); j++)
-            {
-                //如果有重复的直接恢复出厂设置,到下一个点开始遍历
-                if( cmap[s[j]]){
-                    // 将所有元素设置为 0
-                    memset(cmap, 0, sizeof(cmap)); 
-                    break;
-                }else{
-                    // 更新哈希值 不重复的元素 最大字串
-                    cmap[s[j]]++;
-                    cmap[ARRAY_SIZE-1]++;
-                    max = std::max(cmap[ARRAY_SIZE-1],max);
-                }
+            if(dict.find(s[j])!=dict.end()){
+                i = std::max(i,dict.find(s[j])->second);
             }
+            dict[s[j]] = j;
+            res = std::max(res,j-i);
         }
-        return max;
+        return res;
     }
 };
 // @lc code=end
