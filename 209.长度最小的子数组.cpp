@@ -4,41 +4,39 @@
  * [209] 长度最小的子数组
  */
 
-// @lc code=start
+ // @lc code=start
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
+#include <deque>
 #include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
+#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) {
-        
-       auto it = nums.begin();
-       for (int i = 1; i <= nums.size(); i++)
-       {
-         
 
-           int sum = std::accumulate(it, it+i, 0);
-           if(sum>=target){
-             return i; 
-           }
-
-       }
-       
+        int res = INT32_MAX;
+        int sum = 0;
+        int i = 0;
+        int subLength = 0;
+        for (int j = 0; j < nums.size(); j++) {
+            sum += nums[j];
+            while (sum >= target) {
+                subLength = (j - i + 1);
+                res = res < subLength ? res : subLength;
+                sum -= nums[i++];
+            }
+        }
+        return res == INT32_MAX ? 0 : res;
     }
 };
 // @lc code=end
