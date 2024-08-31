@@ -4,36 +4,44 @@
  * [459] 重复的子字符串
  */
 
-// @lc code=start
+ // @lc code=start
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
+#include <deque>
 #include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
+#include <algorithm>
 using namespace std;
 
-class Solution
-{
+
+
+class Solution {
 public:
-    bool repeatedSubstringPattern(string s)
-    {
-        // 右值节省内存
-        // 从1开始查找,忽略查到left s
-        // 查到right s
-        // 则为中间一定有repeated
-        return (s + s).find(s, 1) != s.size();
+
+    std::string repeatString(const std::string& str, int times) {
+        std::string result;
+        for (int i = 0; i < times; ++i) {
+            result += str;
+        }
+        return result;
+    }
+
+    bool repeatedSubstringPattern(string s) {
+        for (int i = 1; i <= s.size() / 2; i++) {
+            
+            string str = s.substr(0, i);
+            if (s == repeatString(str, s.size() / i)) {
+                return true;
+            }
+        }
+        return false;
     }
 };
 // @lc code=end
