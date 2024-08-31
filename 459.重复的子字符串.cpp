@@ -25,23 +25,22 @@ using namespace std;
 class Solution {
 public:
 
-    std::string repeatString(const std::string& str, int times) {
-        std::string result;
-        for (int i = 0; i < times; ++i) {
-            result += str;
-        }
-        return result;
-    }
-
     bool repeatedSubstringPattern(string s) {
         for (int i = 1; i <= s.size() / 2; i++) {
-            
-            string str = s.substr(0, i);
-            if (s == repeatString(str, s.size() / i)) {
-                return true;
+
+            if (s.size() % i == 0) {
+                bool match = true;
+                for (int j = i; j < s.size(); j++) {
+                    if (s[j] != s[j - i]) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) return true;
             }
         }
         return false;
+
     }
 };
 // @lc code=end
