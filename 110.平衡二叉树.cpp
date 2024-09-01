@@ -4,68 +4,87 @@
  * [110] 平衡二叉树
  */
 
-// @lc code=start
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+ // @lc code=start
+ /**
+  * Definition for a binary tree node.
+  * struct TreeNode {
+  *     int val;
+  *     TreeNode *left;
+  *     TreeNode *right;
+  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  * };
+  */
+
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
+#include <deque>
 #include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-#include <numeric>
-#include <memory>
+#include <algorithm>
 using namespace std;
+
 #ifndef LISTNODE_H
 #define LISTNODE_H
-
-struct TreeNode
-{
+struct TreeNode {
     int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode():val(0),left(nullptr),right(nullptr) {}
-    TreeNode(int value):val(value),left(nullptr),right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() :val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int value) :val(value), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 #endif // LISTNODE_H
 
 class Solution {
 public:
 
-    int maxTravTree(TreeNode* node){
-        if(!node) return 0;
-        int left = maxTravTree(node->left);
-        int right = maxTravTree(node->right);
-        return 1 + std::max(left,right);
-    }   
+    int tickTree(TreeNode* node) {
+        if (!node) {
+            return 0;
+        }
+
+        int nLeft = tickTree(node->left);
+        int nRight = tickTree(node->right);
+
+        /**
+         * 1.存在不平衡的情况直接结束递归层层上报
+         * 2.递归计算左右子树的高度
+         */
+        if (nLeft == INT32_MIN || nRight == INT32_MIN) {
+            return INT32_MIN;
+        }
+        else if (std::abs(nLeft - nRight) >= 2) {
+            return INT32_MIN;
+        }
+        else {
+            return std::max(nLeft, nRight) + 1;
+        }
+    }
 
     bool isBalanced(TreeNode* root) {
-         if(!root) return true;
-         if (std::abs(maxTravTree(root->left)-maxTravTree(root->right))>1)
-         {
-            return false;
-         }
-        return isBalanced(root->left)&&isBalanced(root->right);
+        return tickTree(root) != INT32_MIN;
     }
 };
 // @lc code=end
 
+
+#include<gtest/gtest.h>
+TEST(LeetCode110, test1) {
+    Solution s;
+    auto tree = TreeNode(3);
+    tree.left = new TreeNode(9);
+    tree.right = new TreeNode(20);
+    tree.right->left = new TreeNode(15);
+    tree.right->right = new TreeNode(7);
+
+    EXPECT_EQ(s.isBalanced(&tree), true);
+}
