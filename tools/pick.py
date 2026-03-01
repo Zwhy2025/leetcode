@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
 随机选题脚本：支持按类型选题，可选清空做题痕迹（只保留题面）。
-支持 positional 参数指定题号。
+支持 positional 参数指定题号。指定题号时会自动打开 LeetCode 官网题面。
 """
 import os
 import re
 import json
 import random
 import argparse
+import webbrowser
+import urllib.request
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -54,6 +56,27 @@ def get_file_path(filename: str) -> Path | None:
             if p.exists():
                 return p
     return None
+
+
+def get_leetcode_url(question_id: str) -> str | None:
+    """根据题号获取 LeetCode 中文官网题面 URL"""
+    try:
+        url = f"https://leetcode-api-pied.vercel.app/problem/{question_id}"
+        with urllib.request.urlopen(url, timeout=5) as resp:
+            data = json.loads(resp.read().decode())
+            # API 返回 leetcode.com 的 URL，改为 leetcode.cn
+            problem_url = data.get("url", "")
+            if problem_url:
+                return problem_url.replace("leetcode.com", "leetcode.cn")
+    except Exception:
+        pass
+    return None
+
+
+def extract_question_id(filename: str) -> str | None:
+    """从文件名提取题号，如 1.两数之和.cpp -> 1"""
+    m = re.match(r"^(\d+)\.", filename)
+    return m.group(1) if m else None
 
 
 def find_file_by_question_id(question_id: str) -> str | None:
@@ -177,12 +200,13 @@ def main():
     args = parser.parse_args()
 
     if args.question is not None:
-        # 指定题号模式
+        # 指定题号模式：自动清空之前的实现
         filename = find_file_by_question_id(str(args.question))
         if not filename:
             print(f"未找到题号 {args.question} 对应的题目")
             return
         selected = [filename]
+        args.reset = True  # 指定题号时默认清空实现
     else:
         # 随机选题模式
         questions = get_questions_by_category(args.category)
@@ -210,6 +234,13 @@ def main():
             print("---")
             print(code)
             print("---")
+
+        # 自动打开 LeetCode 官网题面
+        qid = extract_question_id(q)
+        if qid:
+            leetcode_url = get_leetcode_url(qid)
+            if leetcode_url:
+                webbrowser.open(leetcode_url)
 
 
 if __name__ == "__main__":

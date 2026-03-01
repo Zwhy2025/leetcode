@@ -1,7 +1,6 @@
 // @before-stub-for-debug-begin
-#include <vector>
 #include <string>
-
+#include <vector>
 
 using namespace std;
 // @before-stub-for-debug-end
@@ -13,43 +12,36 @@ using namespace std;
  */
 
 // @lc code=start
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
-#include <climits>
-#include <cctype>
-#include <cstring>
-#include <cassert>
-using namespace std;
-class Solution
-{
-public:
-    vector<int> twoSum(vector<int> &nums, int target)
-    {
-        std::unordered_map<int, int> map;
 
-        for (int i = 0; i < nums.size(); i++)
-        {
-            //同样是两次遍历,为啥这里面就是o(1)
-            // 这是因为 unordered_map底层是哈希表
-            // 而且 unordered_map 也不用排序
-            // 所以这里属于以空间换时间(两次遍历无额外申请空间)
-            auto it = map.find(target - nums[i]);
-            if (it != map.end())
-            {
-                return {it->second, i};
-            }
-            map[nums[i]] = i;
+#include <algorithm>
+#include <cassert>
+#include <cctype>
+#include <climits>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+class Solution {
+public:
+  vector<int> twoSum(vector<int> &nums, int target) {
+
+    for (int i = 0; i < nums.size(); i++) {
+      for (int j = nums.size() - 1; j > i; j--) {
+        if (nums[i] + nums[j] == target) {
+          return {i, j};
         }
-        return {0, 0};
+      }
     }
+    return {};
+  }
 };
+
 // @lc code=end
