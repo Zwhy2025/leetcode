@@ -14,42 +14,16 @@ set(PROJECT_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
 set(PROJECT_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 set(PROJECT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-
-
-
-# 查找和配置GTest
-find_package(GTest REQUIRED)
-if(GTest_FOUND)
-    message(STATUS "GTest found")
-    include_directories(${GTest_INCLUDE_DIRS})
-    link_directories(${GTest_LIBRARY_DIRS})
-else()
-    message(FATAL_ERROR "GTest not found")
-endif()
-
 # 设置包含目录
 include_directories(${PROJECT_INCLUDE_DIR})
 
 # 设置输出路径
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BIN_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_LIB_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_LIB_DIR})
 
-# 添加源文件并创建库
-aux_source_directory(. LEETCODE_SRC_FILES)
+# 递归收集 src 及子目录下的 .cpp
+file(GLOB_RECURSE LEETCODE_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 add_library(leetcode STATIC ${LEETCODE_SRC_FILES})
 
 # 设置目标文件的包含目录
 target_include_directories(leetcode PUBLIC ${PROJECT_INCLUDE_DIR})
-
-# 创建可执行文件并链接库
-add_executable(display display.cpp)
-target_link_libraries(display leetcode)
-
-add_executable(test test.cc)
-target_link_libraries(test leetcode ${GTEST_BOTH_LIBRARIES})
-
-# 如果需要，链接pthread
-if(UNIX)
-    target_link_libraries(test pthread)
-endif()
