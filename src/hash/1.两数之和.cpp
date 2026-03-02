@@ -29,19 +29,30 @@ using namespace std;
 #include <unordered_set>
 #include <vector>
 using namespace std;
-class Solution {
-public:
-  vector<int> twoSum(vector<int> &nums, int target) {
 
-    for (int i = 0; i < nums.size(); i++) {
-      for (int j = nums.size() - 1; j > i; j--) {
-        if (nums[i] + nums[j] == target) {
-          return {i, j};
+class Solution
+{
+public:
+    vector<int> twoSum(vector<int> &nums, int target)
+    {
+        // TODO
+        std::unordered_map<int, int> mapping;
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            auto it = mapping.find(target - nums[i]);
+            if (it != mapping.end())
+            {
+                return {it->second, i};
+            }
+            else
+            {
+                mapping[nums[i]] = i;
+            }
         }
-      }
+
+        return {};
     }
-    return {};
-  }
 };
 
 // @lc code=end

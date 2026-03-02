@@ -189,7 +189,7 @@ def main():
     parser.add_argument(
         "-n",
         type=int,
-        default=2,
+        default=1,
         help="选题数量",
     )
     parser.add_argument(
@@ -197,7 +197,14 @@ def main():
         action="store_true",
         help="清空做题痕迹：只保留题面，清空实现代码",
     )
+    parser.add_argument(
+        "--keep", "-k",
+        action="store_true",
+        help="保留已有实现，不清空（默认会清空）",
+    )
     args = parser.parse_args()
+    if args.keep:
+        args.reset = False  # --keep 优先，保留实现
 
     if args.question is not None:
         # 指定题号模式：自动清空之前的实现
@@ -206,14 +213,17 @@ def main():
             print(f"未找到题号 {args.question} 对应的题目")
             return
         selected = [filename]
-        args.reset = True  # 指定题号时默认清空实现
+        if not args.keep:
+            args.reset = True  # 指定题号时默认清空实现
     else:
-        # 随机选题模式
+        # 随机选题模式：与按题号一致，默认清空实现
         questions = get_questions_by_category(args.category)
         if not questions:
             print(f"分类 {args.category} 下没有题目")
             return
         selected = random.sample(questions, min(args.n, len(questions)))
+        if not args.keep:
+            args.reset = True  # 随机选题时也默认清空实现
 
     if args.reset:
         for q in selected:
