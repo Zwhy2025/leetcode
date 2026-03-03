@@ -1,6 +1,6 @@
 // @before-stub-for-debug-begin
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 // @before-stub-for-debug-end
@@ -12,14 +12,21 @@ using namespace std;
  */
 
 // @lc code=start
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
  *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ *     ListNode() : val(0), next(nullptr) {
+        // TODO
+    }
+ *     ListNode(int x) : val(x), next(nullptr) {
+        // TODO
+    }
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {
+        // TODO
+    }
  * };
  */
 
@@ -28,56 +35,67 @@ using namespace std;
 
 struct ListNode
 {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
+  int val;
+  ListNode *next;
+  ListNode() : val(0), next(nullptr)
+  {
+    // TODO
+  }
+  ListNode(int x) : val(x), next(nullptr)
+  {
+    // TODO
+  }
+  ListNode(int x, ListNode *next) : val(x), next(next)
+  {
+    // TODO
+  }
 };
 
 #endif // LISTNODE_H
 
-#include <iostream>
-#include <vector>
-#include <string>
 #include <algorithm>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
-#include <climits>
-#include <cctype>
-#include <cstring>
 #include <cassert>
+#include <cctype>
+#include <climits>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+#include <map>
 #include <numeric>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 using namespace std;
 
 class Solution
 {
 public:
-    ListNode *removeElements(ListNode *head, int val)
+  ListNode *removeElements(ListNode *head, int val)
+  {
+    // TODO
+
+    ListNode *dummy = new ListNode(-1);
+    dummy->next = head;
+
+    ListNode *root = dummy;
+
+    while (dummy->next != nullptr)
     {
-
-        auto dummy = new ListNode(-1);
-        dummy->next = head;
-        auto it = dummy;
-
-        while (it->next) {
-
-            if (it->next->val == val) {
-                auto tmp = it->next;
-                it->next = it->next->next;
-                delete tmp;
-            }
-            else {
-                it = it->next;
-            }
-        }
-
-        return dummy->next;
+      if (dummy->next->val == val)
+      {
+        dummy->next = dummy->next->next;
+      }
+      else
+      {
+        dummy = dummy->next;
+      }
     }
+    return root->next;
+  }
 };
-// @lc code=en              
+
+// @lc code=end

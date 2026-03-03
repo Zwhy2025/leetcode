@@ -139,15 +139,15 @@ def clear_implementation(content: str) -> str:
     return "".join(result)
 
 
-def reset_file_to_template(filepath: Path) -> None:
-    """将文件清空为只保留题面（函数签名），清空实现"""
+def reset_file_to_template(filepath: Path) -> bool:
+    """将文件清空为只保留题面（函数签名），清空实现。成功返回 True，失败返回 False。"""
     content = filepath.read_text(encoding="utf-8")
     start_marker = "// @lc code=start"
     end_marker = "// @lc code=end"
     start_idx = content.find(start_marker)
     end_idx = content.find(end_marker)
     if start_idx == -1 or end_idx == -1:
-        return
+        return False
 
     before = content[: start_idx + len(start_marker)]
     block = content[start_idx + len(start_marker) : end_idx]
@@ -156,6 +156,7 @@ def reset_file_to_template(filepath: Path) -> None:
     cleared_block = clear_implementation(block)
     new_content = before + "\n" + cleared_block + "\n" + after
     filepath.write_text(new_content, encoding="utf-8")
+    return True
 
 
 def read_log() -> dict:
@@ -229,8 +230,10 @@ def main():
         for q in selected:
             fp = get_file_path(q)
             if fp:
-                reset_file_to_template(fp)
-                print(f"[已清空] {q}")
+                if reset_file_to_template(fp):
+                    print(f"[已清空] {q}")
+                else:
+                    print(f"[清空失败] {q}（缺少 // @lc code=start 或 // @lc code=end 标记）")
             else:
                 print(f"[未找到] {q}")
 
