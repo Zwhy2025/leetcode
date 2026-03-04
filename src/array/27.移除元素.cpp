@@ -6,40 +6,44 @@
 
 // @lc code=start
 
-#include <iostream>
-#include <vector>
-#include <string>
 #include <algorithm>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <cmath>
-#include <climits>
-#include <cctype>
-#include <cstring>
 #include <cassert>
-#include <numeric>
+#include <cctype>
+#include <climits>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+#include <map>
 #include <memory>
+#include <numeric>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 using namespace std;
 
 class Solution
 {
 public:
-    int removeElement(vector<int> &nums, int val)
-    {
-        int slow = 0;
-        for (int fast  = 0; fast < nums.size(); fast++)
-        {
-            if(val!=nums[fast]){
-                nums[slow] = nums[fast];
-                slow++;
-            }
-        }
+  int removeElement(vector<int> &nums, int val)
+  {
+    // TODO
 
-        return slow;
+    std::vector<int> ret;
+
+    for (int i = 0; i < nums.size(); i++)
+    {
+      if (nums[i] != val)
+      {
+        ret.push_back(nums[i]);
+      }
     }
+    nums = ret;
+    return nums.size();
+  }
 };
+
 // @lc code=end
